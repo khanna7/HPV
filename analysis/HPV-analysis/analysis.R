@@ -15,10 +15,12 @@ library(ergm)
 
 # Read data (& checks)----------
 
-att_cb <- read.csv("../../HPV _attributes _codebook.csv")
-att <- read.csv("../../HPV_attributes.csv")
-cb <- read.csv("../../HPV_codebook.csv")
-dyad <- read.csv("../../HPV_dyad.csv")
+data.loc <- "/Volumes/akhanna/bulkstorage_projects_bsd_computer/HPV-Chicago-Fujimoto/data-files/"
+
+att_cb <- read.csv(paste0(data.loc, "HPV _attributes _codebook.csv"))
+att <- read.csv(paste0(data.loc, "HPV_attributes.csv"))
+cb <- read.csv(paste0(data.loc, "HPV_codebook.csv"))
+dyad <- read.csv(paste0(data.loc,"HPV_dyad.csv"))
 
 # glimpse(att_cb)
 # glimpse(att)
@@ -30,14 +32,22 @@ dyad <- read.csv("../../HPV_dyad.csv")
 dyad_el <- dyad[,c(1,2)]
 
 dyad_el <- apply(dyad_el, c(1,2), "as.character")
-dyad_net <- as.network(dyad_el, directed=FALSE)
+dyad_net <- as.network(dyad_el, directed=TRUE) #read as undirected
+dyad_net_dir <- as.network(dyad_el, directed=TRUE) #read as directed
+
 
 
 # Explore network object
 
+identical(network.edgecount(dyad_net), 
+          network.edgecount(dyad_net_dir)) 
+          #since directed and undirected networks contain same number of edges,
+          #"dyad_net" contains the symmetrized matrix
+
 dyad_net
 (dyad_net%v%"vertex.names")
 list.vertex.attributes(dyad_net)
+
 
 summary(dyad_net ~ edges)
 degreedist(dyad_net)
