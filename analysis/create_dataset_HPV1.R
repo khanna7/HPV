@@ -78,12 +78,12 @@ dyadize <- function(ADJ) {
 
 # Load data --------------------------------------------------------------------
 ## participant attributes
-DATA <- read.csv(paste0("../../Dataset/ming/", city, "/P2.csv"), as.is = T)
+DATA <- read.csv("P2.csv", as.is = T)
 
 ## participant networks
-REFER <- read.table(paste0("../../Dataset/ming/", city, "/P2/refer.txt"), as.is = T)
-SOCIAL <- read.table(paste0("../../Dataset/ming/", city, "/P2/social.txt"), as.is = T)
-SEX <- read.table(paste0("../../Dataset/ming/", city, "/P2/sex.txt"), as.is = T)
+REFER <- read.table("refer.txt", as.is = T)
+SOCIAL <- read.table("social.txt", as.is = T)
+SEX <- read.table("sex.txt", as.is = T)
 
 ## hpv data
 HPV <- read.csv( "HPV_clean_2017-9-16.csv", as.is = T)
