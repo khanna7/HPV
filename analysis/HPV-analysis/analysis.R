@@ -32,7 +32,7 @@ dyad <- read.csv(paste0(data.loc,"HPV_dyad.csv"))
 dyad_el <- dyad[,c(1,2)]
 
 dyad_el <- apply(dyad_el, c(1,2), "as.character")
-dyad_net <- as.network(dyad_el, directed=TRUE) #read as undirected
+dyad_net <- as.network(dyad_el, directed=FALSE) #read as undirected
 dyad_net_dir <- as.network(dyad_el, directed=TRUE) #read as directed
 
 
