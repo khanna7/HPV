@@ -1,3 +1,6 @@
 *.RData
 *.csv
 *.png
+*.doc
+*.docx
+*.pdf
