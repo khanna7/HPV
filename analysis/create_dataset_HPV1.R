@@ -1,12 +1,11 @@
 ## hpv.R
 ## purpuse: create hpv dataset and visualization
-## created: 10/31/2016
-## modified: 10/31/2016
+## created: 10/31/2016 (by Ming)
+## modified: 11/09/2019 (by Aditya)
 
 rm(list = ls())
 
-setwd("C:/Users/Yucheng/OneDrive/Documents/UTH/YMAP/Data/Working_on/HPV")
-setwd("C:/Users/zhaoy/OneDrive/Documents/UTH/YMAP/Data/Working_on/HPV")
+setwd("/Volumes/akhanna/bulkstorage_projects_bsd_computer/HPV-Chicago-Fujimoto/Aditya_11032019/dataset_used for create_dataset_HPV1 & extract_dyad")
 
 # INIT -------------------------------------------------------------------------
 ## Parameters
