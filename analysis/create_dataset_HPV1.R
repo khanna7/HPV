@@ -133,7 +133,7 @@ DATAh$cluster_size <- sapply(g_clusters$membership, function(x) g_clusters$csize
 DATAh$cluster_id <- g_clusters$membership
 
 ## export dataset
-write.csv(DATAh, paste0("../Dataset/hpv/", city, "_hpv.csv"), row.names = F)
+write.csv(DATAh, paste0("_hpv.csv"), row.names = F)
 
 
 # Build participant network ----------------------------------------------------
