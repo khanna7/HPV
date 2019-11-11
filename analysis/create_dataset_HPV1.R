@@ -16,6 +16,7 @@ cex <- 1.25
 
 ## Load packages
 library(igraph)
+library(dplyr)
 
 ## functions
 autocurve.edges2 <-function (graph, start = 0.5) {
@@ -87,7 +88,7 @@ SEX <- read.table("sex.txt", as.is = T)
 
 ## hpv data
 HPV <- read.csv( "HPV_clean_2017-9-16.csv", as.is = T)
-
+final.w1.w2.dt <- read.csv("../numberof receptive anal sex partners as measure o20191109125620/finalized_w1_w2_20191104.csv")
 
 # Merge and clean dataset ------------------------------------------------------
 ## convert class
@@ -109,7 +110,24 @@ HPV[HPV < 0] <- NA
 HPV$num_high_risk <- ifelse(HPV$high_risk_number == ".", 0, HPV$high_risk_number)
 
 ## merge
-DATAh <- dplyr::left_join(HPV, DATA, by = c("ID" = "participant_id"))
+DATAh1 <- dplyr::left_join(HPV, DATA, by = c("ID" = "participant_id"))
+new.dt.needed <- final.w1.w2.dt %>% 
+  select(participant_id,
+         hiv_w1, 
+         age_w1,
+         past12m_homeless_w1,
+         education_w1,
+         num_condomless_anal_sex_receptive_w1,
+         num_sex_partner_w1,
+         sexual_identity_w1,
+         race,
+         hispanicity,
+         fta_w1) %>%
+  mutate(
+    participant_id = as.character(participant_id)
+  )
+
+DATAh <- dplyr::left_join(DATAh1, new.dt.needed, by = c("ID" = "participant_id"))
 
 ### compute wave
 g <- graph_from_adjacency_matrix(as.matrix(REFER))
@@ -133,7 +151,7 @@ DATAh$cluster_size <- sapply(g_clusters$membership, function(x) g_clusters$csize
 DATAh$cluster_id <- g_clusters$membership
 
 ## export dataset
-write.csv(DATAh, paste0("_hpv.csv"), row.names = F)
+write.csv(DATAh, paste0(city, "_hpv.csv"), row.names = F)
 
 
 # Build participant network ----------------------------------------------------
