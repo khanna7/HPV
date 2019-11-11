@@ -15,4 +15,9 @@ Merging and recreating data:
   * Code is in `create_dataset_HPV1.R` (see above).   
 
 Notes: 
-  * Aditya's response to Kayo's notes at `/Volumes/akhanna/bulkstorage_projects_bsd_computer/HPV-Chicago-Fujimoto/Aditya_11032019/instruction_data_generation_analysis_Aditya_11032019_v2.docx`.
+  * Aditya's response to Kayo's notes at `/Volumes/akhanna/bulkstorage_projects_bsd_computer/HPV-Chicago-Fujimoto/Aditya_11032019/instruction_data_generation_analysis_Aditya_11032019_v2.docx`.   
+  
+Codebook:
+* Available at `/Volumes/akhanna/bulkstorage_projects_bsd_computer/HPV-Chicago-Fujimoto/Aditya_11032019/numberof receptive anal sex partners as measure o20191109125620/Finalized_Codebook - Copy.xlsx`
+  
+  
