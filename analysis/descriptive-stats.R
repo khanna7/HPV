@@ -1,4 +1,4 @@
-# Compute descriptive statistics for Table 1
+# Compute statistics for Tables 1 and 2
 
 rm(list=ls())
 
@@ -10,7 +10,13 @@ library(dplyr)
 
 # Read data ---------------------------
 
-dt <- read.csv("/Volumes/home/bulkstorage_projects_bsd_computer/HPV-Chicago-Fujimoto/Aditya_11032019/dataset_used for create_dataset_HPV1 & extract_dyad/houston_hpv.csv", as.is = T)
+dt <- read.csv("../Aditya_11032019/dataset_used for create_dataset_HPV1 & extract_dyad/houston_hpv.csv", as.is = T)
+
+#complete path name: 
+ #/Volumes/akhanna/bulkstorage_projects_bsd_computer/HPV-Chicago-Fujimoto/
+ #Aditya_11032019/dataset_used for create_dataset_HPV1 & extract_dyad/houston_hpv.csv
+                    
+# specifying the whole path leads to errors in reading (likely because of the network connection)
 
 
 # Compute descriptive statistics ---------------------------
@@ -62,7 +68,7 @@ sex.id.cat <-
 table(sex.id.cat)
 table(sex.id.cat)/length(sex.id.cat)
 
-## education
+# education
 educ <- 
   dt %>% 
   select(education_w1) %>% 
@@ -81,11 +87,11 @@ educ.cat <-
 table(educ.cat)
 table(educ.cat)/length(educ.cat)
 
-## homeless
+# homeless
 table(dt$past12m_homeless_w1, exclude = NULL)
 table(dt$past12m_homeless_w1, exclude = NULL)/length(dt$past12m_homeless_w1)
 
-##  Number of sex partners where ego's position is receptive and inconsistent condom use with alters
+#  Number of sex partners where ego's position is receptive and inconsistent condom use with alters
 table(dt$num_condomless_anal_sex_receptive_w1, exclude = NULL)
 
 length(which(dt$num_condomless_anal_sex_receptive_w1 < 2))
@@ -94,10 +100,85 @@ length(which(dt$num_condomless_anal_sex_receptive_w1 < 2))/nrow(dt)
 length(which(dt$num_condomless_anal_sex_receptive_w1 >= 2))
 length(which(dt$num_condomless_anal_sex_receptive_w1 >= 2))/nrow(dt)
 
-## hiv status
+# hiv status
 table(dt$hiv_w1, exclude = NULL)
 table(dt$hiv_w1, exclude = NULL)/nrow(dt)
 
-## syphilis (fta)
+# syphilis (fta)
 table(dt$fta_w1, exclude = NULL)
 table(dt$fta_w1, exclude = NULL)/nrow(dt)
+
+# high risk hpv
+## define new hr_hpv_any = 1 if any of the following are = 1
+dt <-
+  dt %>% 
+  mutate(
+    hr_hpv_any = if_else(
+      (
+        HR_16 == 1 | 
+          HR_18 == 1 |
+          HR_31 == 1 |                                     
+          HR_33 == 1 |                                       
+          HR_35 == 1 |                                     
+          HR_39 == 1 |                                       
+          HR_45 == 1 |                                     
+          HR_51 == 1 |                                       
+          HR_52 == 1 |                                     
+          HR_56 == 1 |                                       
+          HR_58 == 1 |                                       
+          HR_59 == 1 |                                     
+          HR_68 == 1
+       ), 
+      1, 0)
+    )
+table(dt[["hr_hpv_any"]], exclude=NULL)
+  
+# xtab HIV-infection with HR HPV
+xtabs(~factor(hr_hpv_any, exclude = NULL)+
+        factor(hiv_w1, exclude = NULL), data=dt)
+
+# compute number of high risk types
+
+dt <-
+  dt %>% 
+  mutate(
+    num_hr_hpv = 
+      HR_16 + 
+      HR_18 +
+      HR_31+                                     
+      HR_33+                                       
+      HR_35+                                     
+      HR_39+                                       
+      HR_45+                                     
+      HR_51+                                       
+      HR_52+                                     
+      HR_56+                                       
+      HR_58+                                       
+      HR_59+                                     
+      HR_68 
+  )
+summary(dt$num_hr_hpv)
+
+# compute number of high risk types for HIV+ and HIV-
+
+dt %>% #HIV-infected
+  filter(hiv_w1 == 1) %>%
+  summary(num_hr_hpv) 
+
+dt %>% #HIV-uninfected
+  filter(hiv_w1 == 0) %>%
+  summary(num_hr_hpv) 
+
+# multiple HR types: summary
+
+dt <-
+  dt %>% 
+  mutate(
+    mult_hr_type = if_else(num_hr_hpv > 1, 1, 0)
+  )
+table(dt$mult_hr_type, exclude = NULL)
+
+dt %>% #HIV-infected
+  filter(mult_hr_type == 1) %>%
+  group_by(hiv_w1) %>%
+  summarise(n=n()) 
