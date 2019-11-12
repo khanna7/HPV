@@ -14,7 +14,7 @@ dt <- read.csv("../Aditya_11032019/dataset_used for create_dataset_HPV1 & extrac
 
 #complete path name: 
  #/Volumes/akhanna/bulkstorage_projects_bsd_computer/HPV-Chicago-Fujimoto/
- #Aditya_11032019/dataset_used for create_dataset_HPV1 & extract_dyad/houston_hpv.csv
+ # Aditya_11032019/dataset_used for create_dataset_HPV1 & extract_dyad/houston_hpv.csv
                     
 # specifying the whole path leads to errors in reading (likely because of the network connection)
 
@@ -178,7 +178,183 @@ dt <-
   )
 table(dt$mult_hr_type, exclude = NULL)
 
-dt %>% #HIV-infected
+dt %>% # by HIV status
   filter(mult_hr_type == 1) %>%
   group_by(hiv_w1) %>%
   summarise(n=n()) 
+
+# both HPV-16 and HPV-18
+
+dt <-
+  dt %>% 
+  mutate(
+    hpv_16_and_18 = if_else((HR_16 == 1 & HR_18 == 1), 1, 0)
+  )
+table(dt$hpv_16_and_18, exclude=NULL)
+
+dt %>% # by HIV status
+  filter(hpv_16_and_18 == 1) %>%
+  group_by(hiv_w1) %>%
+  summarise(n=n()) 
+
+# either hpv-16 or hpv-18
+
+dt <-
+  dt %>% 
+  mutate(
+    hpv_16_or_18 = if_else((HR_16 == 1 | HR_18 == 1), 1, 0)
+  )
+table(dt$hpv_16_or_18, exclude=NULL)
+
+dt %>% # by HIV status
+  filter(hpv_16_or_18 == 1) %>%
+  group_by(hiv_w1) %>%
+  summarise(n=n()) 
+
+# 9-valent vaccine type: 6, 11, 16, 18, 31, 33, 45, 52, and 58;
+
+dt <-
+  dt %>% 
+  mutate(
+    nine.val.vac = if_else(
+      (
+        #HR_6 == 1 | 
+          LR_11 == 1 |
+          HR_16 == 1 |                                     
+          HR_18 == 1 |                                       
+          HR_31 == 1 |                                     
+          HR_33 == 1 |                                       
+          HR_45 == 1 |                                     
+          HR_52 == 1 |                                       
+          HR_58 == 1 
+      ), 
+      1, 0)
+  )
+table(dt$nine.val.vac, exclude = NULL)
+
+dt %>% # by HIV status
+  filter(nine.val.vac == 1) %>%
+  group_by(hiv_w1) %>%
+  summarise(n=n()) 
+
+# bivariate logistic regressions
+
+## HR 16
+dt %>% 
+  filter(HR_16 == 1) %>%
+  summarise(n=n()) 
+  
+dt %>% 
+  filter(HR_16 == 1) %>%
+  group_by(hiv_w1) %>% 
+  summarise(n=n()) 
+
+## HR 18
+dt %>% 
+  filter(HR_18 == 1) %>%
+  summarise(n=n()) 
+
+dt %>% 
+  filter(HR_18 == 1) %>%
+  group_by(hiv_w1) %>% 
+  summarise(n=n()) 
+
+## HR 31
+dt %>% 
+  filter(HR_31 == 1) %>%
+  summarise(n=n()) 
+
+dt %>% 
+  filter(HR_31 == 1) %>%
+  group_by(hiv_w1) %>% 
+  summarise(n=n()) 
+
+## HR 33
+dt %>% 
+  filter(HR_33 == 1) %>%
+  summarise(n=n()) 
+
+dt %>% 
+  filter(HR_33 == 1) %>%
+  group_by(hiv_w1) %>% 
+  summarise(n=n())
+
+## HR 35
+dt %>% 
+  filter(HR_35 == 1) %>%
+  summarise(n=n()) 
+
+dt %>% 
+  filter(HR_35 == 1) %>%
+  group_by(hiv_w1) %>% 
+  summarise(n=n())
+
+## HR 39
+dt %>% 
+  filter(HR_39 == 1) %>%
+  summarise(n=n()) 
+
+dt %>% 
+  filter(HR_39 == 1) %>%
+  group_by(hiv_w1) %>% 
+  summarise(n=n())
+
+## HR 45
+dt %>% 
+  filter(HR_45 == 1) %>%
+  summarise(n=n()) 
+
+dt %>% 
+  filter(HR_45 == 1) %>%
+  group_by(hiv_w1) %>% 
+  summarise(n=n())
+
+## HR 51
+dt %>% 
+  filter(HR_51 == 1) %>%
+  summarise(n=n()) 
+
+dt %>% 
+  filter(HR_51 == 1) %>%
+  group_by(hiv_w1) %>% 
+  summarise(n=n())
+
+## HR 52
+dt %>% 
+  filter(HR_52 == 1) %>%
+  summarise(n=n()) 
+
+dt %>% 
+  filter(HR_52 == 1) %>%
+  group_by(hiv_w1) %>% 
+  summarise(n=n())
+
+## HR 58
+dt %>% 
+  filter(HR_58 == 1) %>%
+  summarise(n=n()) 
+
+dt %>% 
+  filter(HR_58 == 1) %>%
+  group_by(hiv_w1) %>% 
+  summarise(n=n())
+
+## HR 59
+dt %>% 
+  filter(HR_59 == 1) %>%
+  summarise(n=n()) 
+
+dt %>% 
+  filter(HR_59 == 1) %>%
+  group_by(hiv_w1) %>% 
+  summarise(n=n())
+
+## HR 68
+dt %>% 
+  filter(HR_68 == 1) %>%
+  summarise(n=n()) 
+
+dt %>% 
+  filter(HR_68 == 1) %>%
+  group_by(hiv_w1) %>% 
+  summarise(n=n())
