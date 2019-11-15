@@ -237,17 +237,29 @@ dt %>% # by HIV status
   group_by(hiv_w1) %>%
   summarise(n=n()) 
 
-# bivariate logistic regressions
+# prevalence of HPV types (any and high risk)
+
+## any type
+dt %>% 
+  filter(any_type == 1) %>% 
+  summarise(n=n())
+
+dt %>% 
+  filter(any_type == 1) %>% 
+  group_by(hiv_w1) %>%
+  summarise(n=n()) 
 
 ## HR 16
 dt %>% 
   filter(HR_16 == 1) %>%
-  summarise(n=n()) 
+  summarise(n=n()) %>%
+  mutate(prev = n/nrow(dt))
   
 dt %>% 
   filter(HR_16 == 1) %>%
   group_by(hiv_w1) %>% 
   summarise(n=n()) 
+
 
 ## HR 18
 dt %>% 
