@@ -24,7 +24,7 @@ network.size(hpv_net)
 network.edgecount(hpv_net)
 
 
-# Check why attribute file has 143 rows but network object has 143 nodes ---------------------------
+# Check why attribute file has 143 rows but network object has 141 nodes ---------------------------
 
 
 
