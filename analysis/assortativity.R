@@ -61,8 +61,7 @@ permute.vertexIDs(hpv_net, new.order$ix)
 hpv_net %v% "vertex.names"
 
 
-# Add risk attributes to network object
-
+# Add attributes to network object
 
 hpv_net %v% "hr16" <- dt$HR_16
 hpv_net %v% "hr31" <- dt$HR_18
@@ -77,11 +76,48 @@ hpv_net %v% "hr58" <- dt$HR_58
 hpv_net %v% "hr59" <- dt$HR_59
 hpv_net %v% "hr68" <- dt$HR_68
 
+hpv_net %v% "HIV" <- dt$hiv_w1
+hpv_net %v% "fta" <- dt$fta_w1
+hpv_net %v% "num_condomless_anal_sex_receptive_w1" <- dt$num_condomless_anal_sex_receptive_w1
+hpv_net %v% "past12m_homeless_w1" <- dt$past12m_homeless_w1
+
+# sexual identity
+dt$sex.id.cat <- 
+  recode(dt$sexual_identity_w1,
+         "1" = "0", # Gay
+         "3" = "0", # Gay
+         "2" = "1", # not gay
+         "4" = "1" # not gay
+  )
+
+hpv_net %v% "sex.id.cat" <- dt$sex.id.cat
+
+# age 0 = 25 or less, 1 = 26 or more
+dt$age.cat <- ifelse(dt$age_w1 < 26, 0, 1) 
+hpv_net %v% "age.cat" <- dt$age.cat
+
+# education
+dt$educ.cat <- 
+  recode(dt$education_w1,
+         "1" = "0", #Grade K-12
+         "2" = "1", #"High School or GED",
+         "3" = "1", #High School or GED",
+         "4" = "1", #High School or GED",
+         "5" = "1", #High School or GED",
+         "6" = "1", #High School or GED",
+  )
+hpv_net %v% "educ.cat" <- dt$educ.cat
 
 # delete vertices wth NA for HR attributes ----
 
-na.hr16 <- which(is.na(dt$HR_16))
-hpv_net <- network::delete.vertices(hpv_net, na.hr16)
+nodes.remove <- which(
+  is.na(dt$HR_16) | 
+    is.na(dt$hiv_w1) | 
+    is.na(dt$fta_w1) | 
+    is.na(dt$num_condomless_anal_sex_receptive_w1)
+)
+  
+hpv_net <- network::delete.vertices(hpv_net, nodes.remove)
 
 
 # Convert to igraph -------------------------
@@ -93,7 +129,7 @@ vcount(hpv_ig)
 
 # Compute assortativity coefficients ---------------------------
 
-dt <- dt[-c(na.hr16),]
+dt <- dt[-c(nodes.remove),]
 assortativity(hpv_ig, dt$HR_16)
 assortativity(hpv_ig, dt$HR_18)
 assortativity(hpv_ig, dt$HR_31)
@@ -107,5 +143,18 @@ assortativity(hpv_ig, dt$HR_58)
 assortativity(hpv_ig, dt$HR_59)
 assortativity(hpv_ig, dt$HR_68)
 
+assortativity(hpv_ig, dt$hiv_w1)
 
+assortativity(hpv_ig, dt$fta_w1)
+
+assortativity(hpv_ig, dt$num_condomless_anal_sex_receptive_w1)
+
+assortativity(hpv_ig, dt$age.cat)
+
+
+assortativity(hpv_ig, dt$sex.id.cat)
+
+assortativity(hpv_ig, dt$educ.cat)
+
+assortativity(hpv_ig, dt$past12m_homeless_w1)
 #done
