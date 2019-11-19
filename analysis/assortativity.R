@@ -157,4 +157,96 @@ assortativity(hpv_ig, dt$sex.id.cat)
 assortativity(hpv_ig, dt$educ.cat)
 
 assortativity(hpv_ig, dt$past12m_homeless_w1)
+
+
+# Compute assortativity coefficients for HIV-pos subgraph ---------------------------
+
+# compute positive subgraph
+hivpos.vid <- which(dt$hiv_w1 == 1)
+hpv_ig_hivpos <- induced_subgraph(hpv_ig, vids = hivpos.vid)
+
+# filter dt for attributes of HIV+ individuals
+dt.hivpos <-
+  dt %>%
+  filter(hiv_w1 == 1)
+
+# investigate structure of above objects
+ecount(hpv_ig_hivpos)
+vcount(hpv_ig_hivpos)
+
+dim(dt.hivpos)
+
+assortativity(hpv_ig_hivpos, dt.hivpos$HR_16)
+assortativity(hpv_ig_hivpos, dt.hivpos$HR_18)
+assortativity(hpv_ig_hivpos, dt.hivpos$HR_31)
+assortativity(hpv_ig_hivpos, dt.hivpos$HR_33)
+assortativity(hpv_ig_hivpos, dt.hivpos$HR_35)
+assortativity(hpv_ig_hivpos, dt.hivpos$HR_39)
+assortativity(hpv_ig_hivpos, dt.hivpos$HR_45)
+assortativity(hpv_ig_hivpos, dt.hivpos$HR_51)
+assortativity(hpv_ig_hivpos, dt.hivpos$HR_52)
+assortativity(hpv_ig_hivpos, dt.hivpos$HR_58)
+assortativity(hpv_ig_hivpos, dt.hivpos$HR_59)
+assortativity(hpv_ig_hivpos, dt.hivpos$HR_68)
+
+assortativity(hpv_ig_hivpos, dt.hivpos$hiv_w1)
+
+assortativity(hpv_ig_hivpos, dt.hivpos$fta_w1)
+
+assortativity(hpv_ig_hivpos, dt.hivpos$num_condomless_anal_sex_receptive_w1)
+
+assortativity(hpv_ig_hivpos, dt.hivpos$age.cat)
+
+
+assortativity(hpv_ig_hivpos, dt.hivpos$sex.id.cat)
+
+assortativity(hpv_ig_hivpos, dt.hivpos$educ.cat)
+
+assortativity(hpv_ig_hivpos, dt.hivpos$past12m_homeless_w1)
+
+# Compute assortativity coefficients for HIV-neg subgraph ---------------------------
+
+# compute negative subgraph
+hivneg.vid <- which(dt$hiv_w1 == 0)
+hpv_ig_hivneg <- induced_subgraph(hpv_ig, vids = hivneg.vid)
+
+# filter dt for attributes of HIV+ individuals
+dt.hivneg <-
+  dt %>%
+  filter(hiv_w1 == 0)
+
+# investigate structure of above objects
+ecount(hpv_ig_hivneg)
+vcount(hpv_ig_hivneg)
+
+dim(dt.hivneg)
+
+assortativity(hpv_ig_hivneg, dt.hivneg$HR_16)
+assortativity(hpv_ig_hivneg, dt.hivneg$HR_18)
+assortativity(hpv_ig_hivneg, dt.hivneg$HR_31)
+assortativity(hpv_ig_hivneg, dt.hivneg$HR_33)
+assortativity(hpv_ig_hivneg, dt.hivneg$HR_35)
+assortativity(hpv_ig_hivneg, dt.hivneg$HR_39)
+assortativity(hpv_ig_hivneg, dt.hivneg$HR_45)
+assortativity(hpv_ig_hivneg, dt.hivneg$HR_51)
+assortativity(hpv_ig_hivneg, dt.hivneg$HR_52)
+assortativity(hpv_ig_hivneg, dt.hivneg$HR_58)
+assortativity(hpv_ig_hivneg, dt.hivneg$HR_59)
+assortativity(hpv_ig_hivneg, dt.hivneg$HR_68)
+
+assortativity(hpv_ig_hivneg, dt.hivneg$hiv_w1)
+
+assortativity(hpv_ig_hivneg, dt.hivneg$fta_w1)
+
+assortativity(hpv_ig_hivneg, dt.hivneg$num_condomless_anal_sex_receptive_w1)
+
+assortativity(hpv_ig_hivneg, dt.hivneg$age.cat)
+
+
+assortativity(hpv_ig_hivneg, dt.hivneg$sex.id.cat)
+
+assortativity(hpv_ig_hivneg, dt.hivneg$educ.cat)
+
+assortativity(hpv_ig_hivneg, dt.hivneg$past12m_homeless_w1)
+
 #done
