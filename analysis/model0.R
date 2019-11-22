@@ -1,4 +1,4 @@
-# Fit ERGMs
+# Fit ERGM Model 0
 
 # N.B.  ---------------------------
   # This file uses setup information from "ergm-setup.R"
@@ -42,7 +42,7 @@ model_0_a <- ergm(hpv_net ~
                   
 )
 
-model_0_a
+#model_0_a
 summary(model_0_a)
 gof.model_0_a <- gof(model_0_a)
 p.model_0_a <- plot(gof.model_0_a)
@@ -76,7 +76,7 @@ model_0_b <- ergm(hpv_net ~
                     degree(1)
 )
 
-model_0_b
+#model_0_b
 summary(model_0_b)
 gof.model_0_b <- gof(model_0_b)
 p.model_0_b <- plot(gof.model_0_b)
