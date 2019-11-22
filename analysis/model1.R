@@ -1,4 +1,4 @@
-# Fit ERGMs
+# Fit ERGM Model 1
 
 # N.B.  ---------------------------
 # This file uses setup information from "ergm-setup.R"
@@ -8,6 +8,7 @@
 
 library(dplyr)
 library(ergm)
+
 
 # Load data ---------------------------
 
@@ -38,7 +39,7 @@ model_1.16 <- ergm(hpv_net ~
                      nodematch("fta")+
                      nodefactor("num_condomless_anal_sex_receptive_w1")+
                      gwesp(1, fixed=TRUE)+
-                     degree(0)+
+                     #degree(0)+
                      degree(1)
 )
 
@@ -53,7 +54,7 @@ model_1.18 <- ergm(hpv_net ~
                      nodematch("fta")+
                      nodefactor("num_condomless_anal_sex_receptive_w1")+
                      gwesp(1, fixed=TRUE)+
-                     degree(0)+
+                     #degree(0)+
                      degree(1)
 )
 
@@ -67,7 +68,7 @@ model_1.31 <- ergm(hpv_net ~
                      nodematch("fta")+
                      nodefactor("num_condomless_anal_sex_receptive_w1")+
                      gwesp(1, fixed=TRUE)+
-                     degree(0)+
+                     #degree(0)+
                      degree(1)
 )
 
@@ -81,7 +82,7 @@ model_1.33 <- ergm(hpv_net ~
                      nodematch("fta")+
                      nodefactor("num_condomless_anal_sex_receptive_w1")+
                      gwesp(1, fixed=TRUE)+
-                     degree(0)+
+                     #degree(0)+
                      degree(1)
 )
 
@@ -95,12 +96,26 @@ model_1.35 <- ergm(hpv_net ~
                      nodematch("fta")+
                      nodefactor("num_condomless_anal_sex_receptive_w1")+
                      gwesp(1, fixed=TRUE)+
-                     degree(0)+
+                     #degree(0)+
                      degree(1)
 )
 
 #model_1.35
 summary(model_1.35)
+
+model_1.39 <- ergm(hpv_net ~ 
+                     edges +
+                     nodematch("hr39")+
+                     nodematch("HIV")+
+                     nodematch("fta")+
+                     nodefactor("num_condomless_anal_sex_receptive_w1")+
+                     gwesp(1, fixed=TRUE)+
+                     #degree(0)+
+                     degree(1)
+)
+
+#model_1.39
+summary(model_1.39)
 
 model_1.45 <- ergm(hpv_net ~ 
                      edges +
@@ -109,7 +124,7 @@ model_1.45 <- ergm(hpv_net ~
                      nodematch("fta")+
                      nodefactor("num_condomless_anal_sex_receptive_w1")+
                      gwesp(1, fixed=TRUE)+
-                     degree(0)+
+                     #degree(0)+
                      degree(1)
 )
 
@@ -123,7 +138,7 @@ model_1.51 <- ergm(hpv_net ~
                      nodematch("fta")+
                      nodefactor("num_condomless_anal_sex_receptive_w1")+
                      gwesp(1, fixed=TRUE)+
-                     degree(0)+
+                     #degree(0)+
                      degree(1)
 )
 
@@ -137,7 +152,7 @@ model_1.52 <- ergm(hpv_net ~
                      nodematch("fta")+
                      nodefactor("num_condomless_anal_sex_receptive_w1")+
                      gwesp(1, fixed=TRUE)+
-                     degree(0)+
+                     #degree(0)+
                      degree(1)
 )
 
@@ -151,7 +166,7 @@ model_1.58 <- ergm(hpv_net ~
                      nodematch("fta")+
                      nodefactor("num_condomless_anal_sex_receptive_w1")+
                      gwesp(1, fixed=TRUE)+
-                     degree(0)+
+                     #degree(0)+
                      degree(1)
 )
 
@@ -166,7 +181,7 @@ model_1.59 <- ergm(hpv_net ~
                      nodematch("fta")+
                      nodefactor("num_condomless_anal_sex_receptive_w1")+
                      gwesp(1, fixed=TRUE)+
-                     degree(0)+
+                     #degree(0)+
                      degree(1)
 )
 
@@ -180,7 +195,7 @@ model_1.68 <- ergm(hpv_net ~
                      nodematch("fta")+
                      nodefactor("num_condomless_anal_sex_receptive_w1")+
                      gwesp(1, fixed=TRUE)+
-                     degree(0)+
+                     #degree(0)+
                      degree(1)
 )
 
