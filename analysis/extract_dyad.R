@@ -1,11 +1,9 @@
 
+# paths modified to run on Aditya's system
+
 rm(list = ls())
 
-setwd("C:/Users/Yucheng/OneDrive/Documents/UTH/YMAP/Data/Working_on/HPV")
-setwd("C:/Users/zhaoy/OneDrive/Documents/UTH/YMAP/Data/Working_on/HPV")
-
 city <- "houston"
-
 
 dyadize <- function(ADJ) {
   temp <- which(ADJ == 1, arr.ind = T, useNames = F)
@@ -16,20 +14,23 @@ dyadize <- function(ADJ) {
 
 
 # Load data --------------------------------------------------------------------
+
+data_path <- "../Aditya_11032019/dataset_used for create_dataset_HPV1 & extract_dyad/"
+
 ## participant attributes
-DATA <- read.csv(paste0("../../Dataset/ming/", city, "/P2.csv"), as.is = T)
+DATA <- read.csv(paste0(data_path, "P2.csv"), as.is = T)
 
 ## participant networks
-REFER <- read.table(paste0("../../Dataset/ming/", city, "/P2/refer.txt"), as.is = T)
-SOCIAL <- read.table(paste0("../../Dataset/ming/", city, "/P2/social.txt"), as.is = T)
-SEX <- read.table(paste0("../../Dataset/ming/", city, "/P2/sex.txt"), as.is = T)
+REFER <- read.table(paste0(data_path, "refer.txt"), as.is = T)
+SOCIAL <- read.table(paste0(data_path, "social.txt"), as.is = T)
+SEX <- read.table(paste0(data_path, "sex.txt"), as.is = T)
 
 ## hpv data
-HPV <- read.csv( "input/HPV_clean_2017-9-16.csv", as.is = T)
-att <- read.csv( "input/HPV_attribute.csv", as.is = T)
+HPV <- read.csv(paste0(data_path, "HPV_clean_2017-9-16.csv"), as.is = T)
+att <- read.csv(paste0(data_path, "HPV_attribute.csv"), as.is = T)
 
 All <- merge(HPV, att, by.x="ID", by.y ="caseid", all.x = TRUE)
-write.csv(All,"output/HPV_attributes.csv" , row.names = F)
+write.csv(All, paste0(data_path, "HPV_attributes.csv" , row.names = F))
 
 # Merge and clean dataset ------------------------------------------------------
 ## convert class
@@ -81,7 +82,7 @@ Alt_dyad <- c(Alt_dyad1,Alt_dyad2,Alt_dyad3)
 Rel_dyad <- c(Rel_dyad1,Rel_dyad2,Rel_dyad3)
 
 dyad <- data.frame(Ego = Ego_dyad, Alt = Alt_dyad, Rel = Rel_dyad)
-write.csv(dyad,"output/HPV_dyad.csv" , row.names = F)
+write.csv(dyad, paste0(data_path, "HPV_dyad.csv"), row.names = F)
 
 
 

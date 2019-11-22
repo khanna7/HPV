@@ -1,6 +1,7 @@
 # Compute assortativity coefficients
 
 rm(list=ls())
+
 # Load libraries ---------------------------
 
 library(dplyr)
@@ -248,5 +249,10 @@ assortativity(hpv_ig_hivneg, dt.hivneg$sex.id.cat)
 assortativity(hpv_ig_hivneg, dt.hivneg$educ.cat)
 
 assortativity(hpv_ig_hivneg, dt.hivneg$past12m_homeless_w1)
+
+
+# Save R-binary ---------------------------
+
+save.image(file="assortativity.RData")
 
 #done

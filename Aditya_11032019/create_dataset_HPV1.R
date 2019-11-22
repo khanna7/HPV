@@ -229,8 +229,6 @@ for (var in vars){
 }
 
 
-
-
 ## plot
 png(paste0(city, "_hpv1.png"), width = 1618, height = 1000)
 plot(g,
