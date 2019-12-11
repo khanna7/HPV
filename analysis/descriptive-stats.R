@@ -100,6 +100,12 @@ length(which(dt$num_condomless_anal_sex_receptive_w1 < 2))/nrow(dt)
 length(which(dt$num_condomless_anal_sex_receptive_w1 >= 2))
 length(which(dt$num_condomless_anal_sex_receptive_w1 >= 2))/nrow(dt)
 
+#  Number of sex partners where ego's position is receptive
+# table(dt$num_)
+# The dataset I have: “../Aditya_11032019/dataset_used for create_dataset_HPV1 & extract_dyad/houston_hpv.csv", does 
+# not contain the “num_anal_sex_receptive_2_w1” variable. 
+# I have reported the number of condomless anal sex partners. 
+
 # hiv status
 table(dt$hiv_w1, exclude = NULL)
 table(dt$hiv_w1, exclude = NULL)/nrow(dt)
