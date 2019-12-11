@@ -18,6 +18,14 @@ dt <- read.csv(paste0(data_path, "houston_hpv.csv"), as.is = T)
 att_data <- read.csv(paste0(data_path, "HPV_attribute.csv"))
 
 
+# Replace missing values in each column by median
+
+for(i in 3:ncol(dt)){
+  # don't impute first two columns: "ID", "type_string" 
+  dt[is.na(dt[,i]), i] <- median(dt[,i], na.rm = TRUE)
+}
+
+
 # Convert to network object ---------------------------
 
 dyad_el <- as.data.frame(dyad[,c(1:2)])
@@ -108,6 +116,10 @@ dt$educ.cat <-
          "6" = "1", #High School or GED",
   )
 hpv_net %v% "educ.cat" <- dt$educ.cat
+
+# hr16 OR hr 18
+dt$HR_16 + dt$HR_18
+
 
 # delete vertices wth NA for HR attributes ----
 
