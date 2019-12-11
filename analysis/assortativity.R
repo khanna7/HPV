@@ -65,7 +65,7 @@ hpv_net %v% "vertex.names"
 # Add attributes to network object
 
 hpv_net %v% "hr16" <- dt$HR_16
-hpv_net %v% "hr31" <- dt$HR_18
+hpv_net %v% "hr18" <- dt$HR_18
 hpv_net %v% "hr31" <- dt$HR_31
 hpv_net %v% "hr33" <- dt$HR_33
 hpv_net %v% "hr35" <- dt$HR_35
