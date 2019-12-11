@@ -102,11 +102,11 @@ dt$sex.id.cat <-
 hpv_net %v% "sex.id.cat" <- dt$sex.id.cat
 
 # greater than one condomless receptive anal sex partner
-dt$gr1_condomless_anal_sex_receptive_w1 <- 
-  ifelse(dt$num_condomless_anal_sex_receptive_w1 > 1, 1, 0)
+dt$greq1_condomless_anal_sex_receptive_w1 <- 
+  ifelse(dt$num_condomless_anal_sex_receptive_w1 >= 1, 1, 0)
 
-hpv_net %v% "gr1_condomless_anal_sex_receptive_w1" <- 
-  dt$gr1_condomless_anal_sex_receptive_w1 
+hpv_net %v% "greq1_condomless_anal_sex_receptive_w1" <- 
+  dt$greq1_condomless_anal_sex_receptive_w1 
 
 # age 0 = 25 or less, 1 = 26 or more
 dt$age.cat <- ifelse(dt$age_w1 < 26, 0, 1) 
@@ -114,9 +114,10 @@ hpv_net %v% "age.cat" <- dt$age.cat
 
 # education
 dt$educ.cat <- 
+  # recoded to be consistent with definition in Alan's paper.
   recode(dt$education_w1,
          "1" = "0", #Grade K-12
-         "2" = "1", #"High School or GED",
+         "2" = "0", #"High School or GED",
          "3" = "1", #High School or GED",
          "4" = "1", #High School or GED",
          "5" = "1", #High School or GED",
@@ -145,6 +146,8 @@ vcount(hpv_ig)
 
 assortativity(hpv_ig, dt$HR_16)
 assortativity(hpv_ig, dt$HR_18)
+assortativity(hpv_ig, dt$HR_16_or_18)
+assortativity(hpv_ig, dt$HR_16_and_18)
 assortativity(hpv_ig, dt$HR_31)
 assortativity(hpv_ig, dt$HR_33)
 assortativity(hpv_ig, dt$HR_35)
@@ -156,22 +159,12 @@ assortativity(hpv_ig, dt$HR_58)
 assortativity(hpv_ig, dt$HR_59)
 assortativity(hpv_ig, dt$HR_68)
 
-assortativity(hpv_ig, dt$HR_16_or_18)
-assortativity(hpv_ig, dt$HR_16_and_18)
-
 assortativity(hpv_ig, dt$hiv_w1)
-
 assortativity(hpv_ig, dt$fta_w1)
-
-assortativity(hpv_ig, dt$gr1_condomless_anal_sex_receptive_w1 )
-
+assortativity(hpv_ig, dt$greq1_condomless_anal_sex_receptive_w1)
 assortativity(hpv_ig, dt$age.cat)
-
-
 assortativity(hpv_ig, dt$sex.id.cat)
-
 assortativity(hpv_ig, dt$educ.cat)
-
 assortativity(hpv_ig, dt$past12m_homeless_w1)
 
 
@@ -194,6 +187,8 @@ dim(dt.hivpos)
 
 assortativity(hpv_ig_hivpos, dt.hivpos$HR_16)
 assortativity(hpv_ig_hivpos, dt.hivpos$HR_18)
+assortativity(hpv_ig_hivpos, dt.hivpos$HR_16_or_18)
+assortativity(hpv_ig_hivpos, dt.hivpos$HR_16_and_18)
 assortativity(hpv_ig_hivpos, dt.hivpos$HR_31)
 assortativity(hpv_ig_hivpos, dt.hivpos$HR_33)
 assortativity(hpv_ig_hivpos, dt.hivpos$HR_35)
@@ -206,18 +201,11 @@ assortativity(hpv_ig_hivpos, dt.hivpos$HR_59)
 assortativity(hpv_ig_hivpos, dt.hivpos$HR_68)
 
 assortativity(hpv_ig_hivpos, dt.hivpos$hiv_w1)
-
 assortativity(hpv_ig_hivpos, dt.hivpos$fta_w1)
-
-assortativity(hpv_ig_hivpos, dt.hivpos$num_condomless_anal_sex_receptive_w1)
-
+assortativity(hpv_ig_hivpos, dt.hivpos$greq1_condomless_anal_sex_receptive_w1)
 assortativity(hpv_ig_hivpos, dt.hivpos$age.cat)
-
-
 assortativity(hpv_ig_hivpos, dt.hivpos$sex.id.cat)
-
 assortativity(hpv_ig_hivpos, dt.hivpos$educ.cat)
-
 assortativity(hpv_ig_hivpos, dt.hivpos$past12m_homeless_w1)
 
 # Compute assortativity coefficients for HIV-neg subgraph ---------------------------
@@ -226,7 +214,7 @@ assortativity(hpv_ig_hivpos, dt.hivpos$past12m_homeless_w1)
 hivneg.vid <- which(dt$hiv_w1 == 0)
 hpv_ig_hivneg <- induced_subgraph(hpv_ig, vids = hivneg.vid)
 
-# filter dt for attributes of HIV+ individuals
+# filter dt for attributes of HIV- individuals
 dt.hivneg <-
   dt %>%
   filter(hiv_w1 == 0)
@@ -239,6 +227,8 @@ dim(dt.hivneg)
 
 assortativity(hpv_ig_hivneg, dt.hivneg$HR_16)
 assortativity(hpv_ig_hivneg, dt.hivneg$HR_18)
+assortativity(hpv_ig_hivneg, dt.hivneg$HR_16_or_18)
+assortativity(hpv_ig_hivneg, dt.hivneg$HR_16_and_18) #all HIV-negatives have 0 for HR 16 and 18: xtabs(~as.factor(vertex_attr(hpv_ig, "HR_16_and_18"))+as.factor(vertex_attr(hpv_ig, "HIV")))
 assortativity(hpv_ig_hivneg, dt.hivneg$HR_31)
 assortativity(hpv_ig_hivneg, dt.hivneg$HR_33)
 assortativity(hpv_ig_hivneg, dt.hivneg$HR_35)
@@ -251,19 +241,13 @@ assortativity(hpv_ig_hivneg, dt.hivneg$HR_59)
 assortativity(hpv_ig_hivneg, dt.hivneg$HR_68)
 
 assortativity(hpv_ig_hivneg, dt.hivneg$hiv_w1)
-
 assortativity(hpv_ig_hivneg, dt.hivneg$fta_w1)
-
-assortativity(hpv_ig_hivneg, dt.hivneg$num_condomless_anal_sex_receptive_w1)
-
+assortativity(hpv_ig_hivneg, dt.hivneg$greq1_condomless_anal_sex_receptive_w1)
 assortativity(hpv_ig_hivneg, dt.hivneg$age.cat)
-
-
 assortativity(hpv_ig_hivneg, dt.hivneg$sex.id.cat)
-
 assortativity(hpv_ig_hivneg, dt.hivneg$educ.cat)
-
 assortativity(hpv_ig_hivneg, dt.hivneg$past12m_homeless_w1)
+
 
 
 # Save R-binary ---------------------------
