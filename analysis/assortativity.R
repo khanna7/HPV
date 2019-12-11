@@ -133,7 +133,6 @@ vcount(hpv_ig)
 
 # Compute assortativity coefficients ---------------------------
 
-dt <- dt[-c(nodes.remove),]
 assortativity(hpv_ig, dt$HR_16)
 assortativity(hpv_ig, dt$HR_18)
 assortativity(hpv_ig, dt$HR_31)
@@ -146,6 +145,8 @@ assortativity(hpv_ig, dt$HR_52)
 assortativity(hpv_ig, dt$HR_58)
 assortativity(hpv_ig, dt$HR_59)
 assortativity(hpv_ig, dt$HR_68)
+
+assortativity(hpv_ig, dt$HR_16_or_18)
 
 assortativity(hpv_ig, dt$hiv_w1)
 
