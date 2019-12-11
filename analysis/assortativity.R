@@ -101,6 +101,13 @@ dt$sex.id.cat <-
 
 hpv_net %v% "sex.id.cat" <- dt$sex.id.cat
 
+# greater than one condomless receptive anal sex partner
+dt$gr1_condomless_anal_sex_receptive_w1 <- 
+  ifelse(dt$num_condomless_anal_sex_receptive_w1 > 1, 1, 0)
+
+hpv_net %v% "gr1_condomless_anal_sex_receptive_w1" <- 
+  dt$gr1_condomless_anal_sex_receptive_w1 
+
 # age 0 = 25 or less, 1 = 26 or more
 dt$age.cat <- ifelse(dt$age_w1 < 26, 0, 1) 
 hpv_net %v% "age.cat" <- dt$age.cat
@@ -123,6 +130,9 @@ dt$HR_16_or_18 <- ifelse(hr16_or_18 > 0, 1, 0)
 
 hpv_net %v% "HR_16_or_18" <- dt$HR_16_or_18 
 
+# hr16 and hr 18
+dt$HR_16_and_18 <- ifelse(hr16_or_18 == 2, 1, 0)
+hpv_net %v% "HR_16_and_18" <- dt$HR_16_and_18 
 
 # Convert to igraph -------------------------
 
@@ -147,12 +157,13 @@ assortativity(hpv_ig, dt$HR_59)
 assortativity(hpv_ig, dt$HR_68)
 
 assortativity(hpv_ig, dt$HR_16_or_18)
+assortativity(hpv_ig, dt$HR_16_and_18)
 
 assortativity(hpv_ig, dt$hiv_w1)
 
 assortativity(hpv_ig, dt$fta_w1)
 
-assortativity(hpv_ig, dt$num_condomless_anal_sex_receptive_w1)
+assortativity(hpv_ig, dt$gr1_condomless_anal_sex_receptive_w1 )
 
 assortativity(hpv_ig, dt$age.cat)
 
