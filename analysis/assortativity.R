@@ -118,19 +118,10 @@ dt$educ.cat <-
 hpv_net %v% "educ.cat" <- dt$educ.cat
 
 # hr16 OR hr 18
-dt$HR_16 + dt$HR_18
+hr16_or_18 <- dt$HR_16 + dt$HR_18
+dt$HR_16_or_18 <- ifelse(hr16_or_18 > 0, 1, 0)
 
-
-# delete vertices wth NA for HR attributes ----
-
-nodes.remove <- which(
-  is.na(dt$HR_16) | 
-    is.na(dt$hiv_w1) | 
-    is.na(dt$fta_w1) | 
-    is.na(dt$num_condomless_anal_sex_receptive_w1)
-)
-  
-hpv_net <- network::delete.vertices(hpv_net, nodes.remove)
+hpv_net %v% "HR_16_or_18" <- dt$HR_16_or_18 
 
 
 # Convert to igraph -------------------------
