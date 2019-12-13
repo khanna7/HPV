@@ -19,36 +19,8 @@ load(file="ergm-setup.RData")
 
 # Create needed variables ---------------------------
 
-# any HR type: "hr_hpv_any"
-dt <-
-  dt %>% 
-  mutate(
-    hr_hpv_any = if_else(
-      (
-        HR_16 == 1 | 
-          HR_18 == 1 |
-          HR_31 == 1 |                                     
-          HR_33 == 1 |                                       
-          HR_35 == 1 |                                     
-          HR_39 == 1 |                                       
-          HR_45 == 1 |                                     
-          HR_51 == 1 |                                       
-          HR_52 == 1 |                                     
-          HR_56 == 1 |                                       
-          HR_58 == 1 |                                       
-          HR_59 == 1 |                                     
-          HR_68 == 1
-      ), 
-      1, 0)
-  )
+# All needed variables are constructed in ergm-setup.R
 
-table(dt[["hr_hpv_any"]], exclude=NULL)
-
-hpv_net %v% "hr_hpv_any" <- dt$hr_hpv_any
-
-# sqrt of num_condomless_anal_sex_receptive_w1
-hpv_net %v% "sqrt.num_condomless_anal_sex_receptive_w1" <- sqrt(hpv_net %v% 
-                                                                  "num_condomless_anal_sex_receptive_w1")
 
 # Fit ERGM: Model 0_a ---------------------------
 
