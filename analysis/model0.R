@@ -58,12 +58,18 @@ hpv_net %v% "hr_hpv_any" <- dt$hr_hpv_any
 # + geometrically weighted edgewise shared partner statistics (GWESP)
 # + degree 0 and degree 1 to control for having only one tie (degree1). 
 
-factors <- c("edges", "degree(1)", "gwesp(1, fixed = T)")
-form1 <- as.formula(paste0("hpv_net~", paste0(factors, collapse="+")))
+factors <- c("edges", "degree(0:1)", "gwesp(1, fixed=TRUE)") #model with degree(1) only does not converge
+form.model0 <- as.formula(paste0("hpv_net~", paste0(factors, collapse="+")))
 
-age.form <- update(form1, ~. + absdiff("age"))
+model0.age <- update(form.model0, ~. +absdiff("age"))
+model0.hr_hpv_any <- update(form.model0, ~. + nodematch("hr_hpv_any")) #model with diff=T doesn't fit
+model0.mult_hr_type <- update(form.model0, ~. + nodematch("mult_hr_type"))
+model0.HIV <- update(form.model0, ~. + nodematch("HIV"))
 
-model0_a_age <- ergm(formula = age.form, eval.loglik = F)
+model0_a_age <- ergm(formula = model0.age, eval.loglik = F) #age
+#(nice tutorial on the formula function: https://www.datacamp.com/community/tutorials/r-formula-tutorial)
+model0_a_hr_hpv_any <- ergm(formula = model0.hr_hpv_any, eval.loglik = F) #hr.hpv.any
+model0_a_HIV <- ergm(formula = model0.HIV, eval.loglik = F)
 
 model_0_age <- ergm(hpv_net ~ 
                       edges+
