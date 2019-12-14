@@ -21,7 +21,7 @@ load(file="ergm-setup.RData")
 
 factors <- c("edges", "degree(0:1)", "gwesp(1, fixed=TRUE)",
              "nodematch('HIV')", "nodematch('fta')", 
-             "nodefactor('num_condomless_anal_sex_receptive_w1')"
+             "nodematch('num_condomless_anal_sex_receptive.cat', diff=TRUE)"
              ) #model with degree(1) only does not converge
 form.model1 <- as.formula(paste0("hpv_net~", paste0(factors, collapse="+")))
 
@@ -82,6 +82,22 @@ model_1.HR_16_and_18 <- update(form.model0, ~. +nodematch("HR_16_and_18", diff=T
 fit.model_1.HR_16_and_18 <- ergm(model_1.HR_16_and_18, eval.loglik = FALSE)  
 summary(fit.model_1.HR_16_and_18)
 
-model_1.HR_16_or_18 <- update(form.model0, ~. +nodematch("HR_16_or_18", diff=T))
+model_1.HR_16_or_18 <- update(form.model0, ~. +nodematch("HR_16_or_18"))
 fit.model_1.HR_16_or_18 <- ergm(model_1.HR_16_or_18, eval.loglik = FALSE)  
 summary(fit.model_1.HR_16_or_18)
+
+model_1.hiv<- update(form.model0, ~. +nodematch("HIV", diff=TRUE))
+fit.model_1.hiv<- ergm(model_1.hiv, eval.loglik = FALSE)  
+summary(fit.model_1.hiv)
+
+model_1.fta<- update(form.model0, ~. +nodematch("fta"))
+fit.model_1.fta<- ergm(model_1.fta, eval.loglik = FALSE)  
+summary(fit.model_1.fta)
+
+model_1.hiv_hpv16<- update(form.model0, ~. +nodematch("hiv_hpv16"))
+fit.model_1.hiv_hpv16<- ergm(model_1.hiv_hpv16, eval.loglik = FALSE)  
+summary(fit.model_1.hiv_hpv16)
+
+model_1.hiv_hpv45<- update(form.model0, ~. +nodematch("hiv_hpv45"))
+fit.model_1.hiv_hpv45<- ergm(model_1.hiv_hpv45, eval.loglik = FALSE)  
+summary(fit.model_1.hiv_hpv45)
