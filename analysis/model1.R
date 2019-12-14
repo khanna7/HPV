@@ -98,6 +98,11 @@ model_1.hiv_hpv16<- update(form.model0, ~. +nodematch("hiv_hpv16"))
 fit.model_1.hiv_hpv16<- ergm(model_1.hiv_hpv16, eval.loglik = FALSE)  
 summary(fit.model_1.hiv_hpv16)
 
+model_1.hiv_hpv18<- update(form.model0, ~. +nodematch("hiv_hpv18"))
+fit.model_1.hiv_hpv18<- ergm(model_1.hiv_hpv18, eval.loglik = FALSE)  
+summary(fit.model_1.hiv_hpv18)
+
 model_1.hiv_hpv45<- update(form.model0, ~. +nodematch("hiv_hpv45"))
 fit.model_1.hiv_hpv45<- ergm(model_1.hiv_hpv45, eval.loglik = FALSE)  
 summary(fit.model_1.hiv_hpv45)
+
