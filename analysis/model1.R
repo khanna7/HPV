@@ -78,4 +78,10 @@ model_1.68 <- update(form.model0, ~. +nodematch("hr68"))
 fit.model_1.68 <- ergm(model_1.68, eval.loglik = FALSE)  
 summary(fit.model_1.68)
 
+model_1.HR_16_and_18 <- update(form.model0, ~. +nodematch("HR_16_and_18", diff=T))
+fit.model_1.HR_16_and_18 <- ergm(model_1.HR_16_and_18, eval.loglik = FALSE)  
+summary(fit.model_1.HR_16_and_18)
 
+model_1.HR_16_or_18 <- update(form.model0, ~. +nodematch("HR_16_or_18", diff=T))
+fit.model_1.HR_16_or_18 <- ergm(model_1.HR_16_or_18, eval.loglik = FALSE)  
+summary(fit.model_1.HR_16_or_18)
