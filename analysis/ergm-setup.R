@@ -127,6 +127,19 @@ table(dt$hiv_hpv16, useNA = "always")
 hpv_net %v% "hiv_hpv16" <- dt$hiv_hpv16
 
 
+# categorize num_condomless_anal_sex_receptive_w1"
+
+table(hpv_net %v% "num_condomless_anal_sex_receptive_w1", exclude=NULL)
+dt <- 
+  dt %>% 
+  mutate(
+    num_condomless_anal_sex_receptive.cat = if_else(dt$num_condomless_anal_sex_receptive_w1 > 0, 
+                                                    1, 0)
+  )
+table(dt$num_condomless_anal_sex_receptive.cat, exclude = NULL)
+hpv_net %v% "num_condomless_anal_sex_receptive.cat" <- dt$num_condomless_anal_sex_receptive.cat
+
+
 # Save image ---------------------------
 
 save.image(file="ergm-setup.RData")
