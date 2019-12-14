@@ -126,7 +126,34 @@ dt <-
 table(dt$hiv_hpv16, useNA = "always")
 hpv_net %v% "hiv_hpv16" <- dt$hiv_hpv16
 
-# HIV_HPV18 nodemix
+# HIV_HPV16_and_18 nodemix
+
+dt <-
+  dt %>% 
+  mutate(hiv_hpv16_and_18 = 
+           case_when(hiv_w1 == 0 & HR_16_and_18 == 0 ~ 0,
+                     hiv_w1 == 1 & HR_16_and_18 == 0 ~ 0,
+                     hiv_w1 == 0 & HR_16_and_18 == 1 ~ 0,
+                     hiv_w1 == 1 & HR_16_and_18 == 1 ~ 1)
+  )
+table(dt$hiv_hpv16_and_18, useNA = "always")
+hpv_net %v% "hiv_hpv16_and_18" <- dt$hiv_hpv16_and_18
+
+# HIV_HPV16_or_18 nodemix
+
+dt <-
+  dt %>% 
+  mutate(hiv_hpv16_or_18 = 
+           case_when(hiv_w1 == 0 & HR_16_or_18 == 0 ~ 0,
+                     hiv_w1 == 1 & HR_16_or_18 == 0 ~ 0,
+                     hiv_w1 == 0 & HR_16_or_18 == 1 ~ 0,
+                     hiv_w1 == 1 & HR_16_or_18 == 1 ~ 1)
+  )
+table(dt$hiv_hpv16_or_18, useNA = "always")
+hpv_net %v% "hiv_hpv16_or_18" <- dt$hiv_hpv16_or_18
+
+
+# HIV_HPV16and18 nodemix
 
 dt <-
   dt %>% 
@@ -138,6 +165,8 @@ dt <-
   )
 table(dt$hiv_hpv18, useNA = "always")
 hpv_net %v% "hiv_hpv18" <- dt$hiv_hpv18
+
+
 
 # categorize num_condomless_anal_sex_receptive_w1"
 
