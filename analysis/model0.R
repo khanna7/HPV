@@ -77,7 +77,7 @@ summary(model0_a_sqrt.num_condomless_anal_sex_receptive_w1)
 # Fit ERGM: Model 0_b ---------------------------
 
 # Signifcant terms in 0_a are:
-# edges, absdiff.age, nodematch.fta.1, gwesp.fixed.1
+# edges, absdiff.age, 
 
 # Other terms to control for: Any hrHPV infection 
 # No hrHPV infection
