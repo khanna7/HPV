@@ -28,8 +28,12 @@ for(i in 3:ncol(dt)){
 # Convert to network object ---------------------------
 
 dyad_el <- as.data.frame(dyad[,c(1:2)])
+dyad_el_mat <- dyad_el
 dyad_el <- apply(dyad_el, c(1:2), "as.factor")
+
+attr(dyad_el, "n") <- length(dt$caseid)
 hpv_net <- network::as.network(dyad_el, directed=FALSE)
+network.vertex.names(hpv_net) <- dt$caseid
 
 network.size(hpv_net)
 network.edgecount(hpv_net)
@@ -37,25 +41,13 @@ network.edgecount(hpv_net)
 
 # Check why attribute file has 143 rows but network object has 141 nodes ---------------------------
 
-length(dt$caseid) #n=143
-
-network.size(hpv_net) #n=141
+length(dt$caseid) #n=160
+network.size(hpv_net) #n=160
 hpv_net %v% "vertex.names"
-length(unique(hpv_net %v% "vertex.names")) # All 141 are unique
+length(unique(hpv_net %v% "vertex.names")) # All  are unique
 
 idx.notin <- which(!(dt$ID) %in% (hpv_net %v% "vertex.names"))
 (dt$ID)[idx.notin] #two participants are in the dt dataset but not in network
-
-
-# Add isolates to the network object
-
-hpv_net <- network::add.vertices(hpv_net, nv=length(idx.notin))
-network::set.vertex.attribute(
-  hpv_net, 
-  "vertex.names",
-  as.character((dt$ID)[idx.notin]),
-  which(is.na(hpv_net %v% "vertex.names"))
-)
 
 
 # Reorder vertex ids to fill in attributes ---------------------------
