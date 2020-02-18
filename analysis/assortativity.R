@@ -11,11 +11,10 @@ library(igraph)
 
 
 # Read data ---------------------------
-
-data_path <- "../Aditya_11032019/dataset_used for create_dataset_HPV1 & extract_dyad/"
-dyad <- read.csv(paste0(data_path, "HPV_dyad.csv"))
-dt <- read.csv(paste0(data_path, "houston_hpv.csv"), as.is = T)
-att_data <- read.csv(paste0(data_path, "HPV_attribute.csv"))
+data_path <- "../sent_to_Aditya_02092020/"
+dyad <- read.csv(paste0(data_path, "HPV_dyad_2019-12-16.csv"))
+dt <- read.csv(paste0(data_path, "aditya_hpv_final_v3_attributes_referred_by_final.csv"), as.is = T)
+#att_data <- read.csv(paste0(data_path, "HPV_attribute.csv"))
 
 
 # Replace missing values in each column by median
@@ -38,9 +37,7 @@ network.edgecount(hpv_net)
 
 # Check why attribute file has 143 rows but network object has 141 nodes ---------------------------
 
-length(dt$ID) #n=143
-
-length(att_data$caseid) #n=134
+length(dt$caseid) #n=143
 
 network.size(hpv_net) #n=141
 hpv_net %v% "vertex.names"
@@ -72,22 +69,22 @@ hpv_net %v% "vertex.names"
 
 # Add attributes to network object
 
-hpv_net %v% "hr16" <- dt$HR_16
-hpv_net %v% "hr18" <- dt$HR_18
-hpv_net %v% "hr31" <- dt$HR_31
-hpv_net %v% "hr33" <- dt$HR_33
-hpv_net %v% "hr35" <- dt$HR_35
-hpv_net %v% "hr39" <- dt$HR_39
-hpv_net %v% "hr45" <- dt$HR_45
-hpv_net %v% "hr51" <- dt$HR_51
-hpv_net %v% "hr52" <- dt$HR_52
-hpv_net %v% "hr58" <- dt$HR_58
-hpv_net %v% "hr59" <- dt$HR_59
-hpv_net %v% "hr68" <- dt$HR_68
+hpv_net %v% "hr16" <- dt$hr_16
+hpv_net %v% "hr18" <- dt$hr_18
+hpv_net %v% "hr31" <- dt$hr_31
+hpv_net %v% "hr33" <- dt$hr_33
+hpv_net %v% "hr35" <- dt$hr_35
+hpv_net %v% "hr39" <- dt$hr_39
+hpv_net %v% "hr45" <- dt$hr_45
+hpv_net %v% "hr51" <- dt$hr_51
+hpv_net %v% "hr52" <- dt$hr_52
+hpv_net %v% "hr58" <- dt$hr_58
+hpv_net %v% "hr59" <- dt$hr_59
+hpv_net %v% "hr68" <- dt$hr_68
 
 hpv_net %v% "HIV" <- dt$hiv_w1
 hpv_net %v% "fta" <- dt$fta_w1
-hpv_net %v% "num_condomless_anal_sex_receptive_w1" <- dt$num_condomless_anal_sex_receptive_w1
+#hpv_net %v% "num_condomless_anal_sex_receptive_w1" <- dt$num_condomless_anal_sex_receptive_w1
 hpv_net %v% "past12m_homeless_w1" <- dt$past12m_homeless_w1
 
 # sexual identity
@@ -102,11 +99,11 @@ dt$sex.id.cat <-
 hpv_net %v% "sex.id.cat" <- dt$sex.id.cat
 
 # greater than one condomless receptive anal sex partner
-dt$greq1_condomless_anal_sex_receptive_w1 <- 
-  ifelse(dt$num_condomless_anal_sex_receptive_w1 >= 1, 1, 0)
+##dt$greq1_condomless_anal_sex_receptive_w1 <- 
+  ##ifelse(dt$num_condomless_anal_sex_receptive_w1 >= 1, 1, 0)
 
-hpv_net %v% "greq1_condomless_anal_sex_receptive_w1" <- 
-  dt$greq1_condomless_anal_sex_receptive_w1 
+##hpv_net %v% "greq1_condomless_anal_sex_receptive_w1" <- 
+  ##dt$greq1_condomless_anal_sex_receptive_w1 
 
 # age 0 = 25 or less, 1 = 26 or more
 dt$age.cat <- ifelse(dt$age_w1 < 26, 0, 1) 
@@ -126,14 +123,14 @@ dt$educ.cat <-
 hpv_net %v% "educ.cat" <- dt$educ.cat
 
 # hr16 OR hr 18
-hr16_or_18 <- dt$HR_16 + dt$HR_18
-dt$HR_16_or_18 <- ifelse(hr16_or_18 > 0, 1, 0)
+hr16_or_18 <- dt$hr_16 + dt$hr_18
+dt$hr_16_or_18 <- ifelse(hr16_or_18 > 0, 1, 0)
 
-hpv_net %v% "HR_16_or_18" <- dt$HR_16_or_18 
+hpv_net %v% "hr_16_or_18" <- dt$hr_16_or_18 
 
 # hr16 and hr 18
-dt$HR_16_and_18 <- ifelse(hr16_or_18 == 2, 1, 0)
-hpv_net %v% "HR_16_and_18" <- dt$HR_16_and_18 
+dt$hr_16_and_18 <- ifelse(hr16_or_18 == 2, 1, 0)
+hpv_net %v% "hr_16_and_18" <- dt$hr_16_and_18 
 
 # Convert to igraph -------------------------
 
@@ -144,20 +141,20 @@ vcount(hpv_ig)
 
 # Compute assortativity coefficients ---------------------------
 
-assortativity(hpv_ig, dt$HR_16)
-assortativity(hpv_ig, dt$HR_18)
-assortativity(hpv_ig, dt$HR_16_or_18)
-assortativity(hpv_ig, dt$HR_16_and_18)
-assortativity(hpv_ig, dt$HR_31)
-assortativity(hpv_ig, dt$HR_33)
-assortativity(hpv_ig, dt$HR_35)
-assortativity(hpv_ig, dt$HR_39)
-assortativity(hpv_ig, dt$HR_45)
-assortativity(hpv_ig, dt$HR_51)
-assortativity(hpv_ig, dt$HR_52)
-assortativity(hpv_ig, dt$HR_58)
-assortativity(hpv_ig, dt$HR_59)
-assortativity(hpv_ig, dt$HR_68)
+assortativity(hpv_ig, dt$hr_16) #hpv_ig should have 160 nodes
+assortativity(hpv_ig, dt$hr_18)
+assortativity(hpv_ig, dt$hr_16_or_18)
+assortativity(hpv_ig, dt$hr_16_and_18)
+assortativity(hpv_ig, dt$hr_31)
+assortativity(hpv_ig, dt$hr_33)
+assortativity(hpv_ig, dt$hr_35)
+assortativity(hpv_ig, dt$hr_39)
+assortativity(hpv_ig, dt$hr_45)
+assortativity(hpv_ig, dt$hr_51)
+assortativity(hpv_ig, dt$hr_52)
+assortativity(hpv_ig, dt$hr_58)
+assortativity(hpv_ig, dt$hr_59)
+assortativity(hpv_ig, dt$hr_68)
 
 assortativity(hpv_ig, dt$hiv_w1)
 assortativity(hpv_ig, dt$fta_w1)
@@ -255,3 +252,4 @@ assortativity(hpv_ig_hivneg, dt.hivneg$past12m_homeless_w1)
 save.image(file="assortativity.RData")
 
 #done
+
