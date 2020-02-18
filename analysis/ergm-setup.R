@@ -1,5 +1,7 @@
 # Fit ERGMs
 
+rm(list=ls())
+
 # N.B.  ---------------------------
 
 # This file uses code from ERGM analysis first performed in Fall 2018: 
@@ -43,19 +45,19 @@ dt <-
   dt %>% 
   mutate(
     num_hr_hpv = 
-      HR_16 + 
-      HR_18 +
-      HR_31+                                     
-      HR_33+                                       
-      HR_35+                                     
-      HR_39+                                       
-      HR_45+                                     
-      HR_51+                                       
-      HR_52+                                     
-      HR_56+                                       
-      HR_58+                                       
-      HR_59+                                     
-      HR_68 
+      hr_16 + 
+      hr_18 +
+      hr_31+                                     
+      hr_33+                                       
+      hr_35+                                     
+      hr_39+                                       
+      hr_45+                                     
+      hr_51+                                       
+      hr_52+                                     
+      hr_56+                                       
+      hr_58+                                       
+      hr_59+                                     
+      hr_68 
   )
 summary(dt$num_hr_hpv)
 
@@ -74,19 +76,19 @@ dt <-
   mutate(
     hr_hpv_any = if_else(
       (
-        HR_16 == 1 | 
-          HR_18 == 1 |
-          HR_31 == 1 |                                     
-          HR_33 == 1 |                                       
-          HR_35 == 1 |                                     
-          HR_39 == 1 |                                       
-          HR_45 == 1 |                                     
-          HR_51 == 1 |                                       
-          HR_52 == 1 |                                     
-          HR_56 == 1 |                                       
-          HR_58 == 1 |                                       
-          HR_59 == 1 |                                     
-          HR_68 == 1
+        hr_16 == 1 | 
+          hr_18 == 1 |
+          hr_31 == 1 |                                     
+          hr_33 == 1 |                                       
+          hr_35 == 1 |                                     
+          hr_39 == 1 |                                       
+          hr_45 == 1 |                                     
+          hr_51 == 1 |                                       
+          hr_52 == 1 |                                     
+          hr_56 == 1 |                                       
+          hr_58 == 1 |                                       
+          hr_59 == 1 |                                     
+          hr_68 == 1
       ), 
       1, 0)
   )
@@ -105,10 +107,10 @@ hpv_net %v% "sqrt.num_condomless_anal_sex_receptive_w1" <- sqrt(hpv_net %v%
 dt <-
   dt %>% 
   mutate(hiv_hpv45 = 
-           case_when(hiv_w1 == 0 & HR_45 == 0 ~ 0,
-                     hiv_w1 == 1 & HR_45 == 0 ~ 0,
-                     hiv_w1 == 0 & HR_45 == 1 ~ 0,
-                     hiv_w1 == 1 & HR_45 == 1 ~ 1)
+           case_when(hiv_w1 == 0 & hr_45 == 0 ~ 0,
+                     hiv_w1 == 1 & hr_45 == 0 ~ 0,
+                     hiv_w1 == 0 & hr_45 == 1 ~ 0,
+                     hiv_w1 == 1 & hr_45 == 1 ~ 1)
   )
 table(dt$hiv_hpv45, useNA = "always")
 hpv_net %v% "hiv_hpv45" <- dt$hiv_hpv45
@@ -118,10 +120,10 @@ hpv_net %v% "hiv_hpv45" <- dt$hiv_hpv45
 dt <-
   dt %>% 
   mutate(hiv_hpv16 = 
-           case_when(hiv_w1 == 0 & HR_16 == 0 ~ 0,
-                     hiv_w1 == 1 & HR_16 == 0 ~ 0,
-                     hiv_w1 == 0 & HR_16 == 1 ~ 0,
-                     hiv_w1 == 1 & HR_16 == 1 ~ 1)
+           case_when(hiv_w1 == 0 & hr_16 == 0 ~ 0,
+                     hiv_w1 == 1 & hr_16 == 0 ~ 0,
+                     hiv_w1 == 0 & hr_16 == 1 ~ 0,
+                     hiv_w1 == 1 & hr_16 == 1 ~ 1)
   )
 table(dt$hiv_hpv16, useNA = "always")
 hpv_net %v% "hiv_hpv16" <- dt$hiv_hpv16
@@ -131,10 +133,10 @@ hpv_net %v% "hiv_hpv16" <- dt$hiv_hpv16
 dt <-
   dt %>% 
   mutate(hiv_hpv16_and_18 = 
-           case_when(hiv_w1 == 0 & HR_16_and_18 == 0 ~ 0,
-                     hiv_w1 == 1 & HR_16_and_18 == 0 ~ 0,
-                     hiv_w1 == 0 & HR_16_and_18 == 1 ~ 0,
-                     hiv_w1 == 1 & HR_16_and_18 == 1 ~ 1)
+           case_when(hiv_w1 == 0 & hr_16_and_18 == 0 ~ 0,
+                     hiv_w1 == 1 & hr_16_and_18 == 0 ~ 0,
+                     hiv_w1 == 0 & hr_16_and_18 == 1 ~ 0,
+                     hiv_w1 == 1 & hr_16_and_18 == 1 ~ 1)
   )
 table(dt$hiv_hpv16_and_18, useNA = "always")
 hpv_net %v% "hiv_hpv16_and_18" <- dt$hiv_hpv16_and_18
@@ -144,10 +146,10 @@ hpv_net %v% "hiv_hpv16_and_18" <- dt$hiv_hpv16_and_18
 dt <-
   dt %>% 
   mutate(hiv_hpv16_or_18 = 
-           case_when(hiv_w1 == 0 & HR_16_or_18 == 0 ~ 0,
-                     hiv_w1 == 1 & HR_16_or_18 == 0 ~ 0,
-                     hiv_w1 == 0 & HR_16_or_18 == 1 ~ 0,
-                     hiv_w1 == 1 & HR_16_or_18 == 1 ~ 1)
+           case_when(hiv_w1 == 0 & hr_16_or_18 == 0 ~ 0,
+                     hiv_w1 == 1 & hr_16_or_18 == 0 ~ 0,
+                     hiv_w1 == 0 & hr_16_or_18 == 1 ~ 0,
+                     hiv_w1 == 1 & hr_16_or_18 == 1 ~ 1)
   )
 table(dt$hiv_hpv16_or_18, useNA = "always")
 hpv_net %v% "hiv_hpv16_or_18" <- dt$hiv_hpv16_or_18
@@ -158,10 +160,10 @@ hpv_net %v% "hiv_hpv16_or_18" <- dt$hiv_hpv16_or_18
 dt <-
   dt %>% 
   mutate(hiv_hpv18 = 
-           case_when(hiv_w1 == 0 & HR_18 == 0 ~ 0,
-                     hiv_w1 == 1 & HR_18 == 0 ~ 0,
-                     hiv_w1 == 0 & HR_18 == 1 ~ 0,
-                     hiv_w1 == 1 & HR_18 == 1 ~ 1)
+           case_when(hiv_w1 == 0 & hr_18 == 0 ~ 0,
+                     hiv_w1 == 1 & hr_18 == 0 ~ 0,
+                     hiv_w1 == 0 & hr_18 == 1 ~ 0,
+                     hiv_w1 == 1 & hr_18 == 1 ~ 1)
   )
 table(dt$hiv_hpv18, useNA = "always")
 hpv_net %v% "hiv_hpv18" <- dt$hiv_hpv18
@@ -171,7 +173,7 @@ hpv_net %v% "hiv_hpv18" <- dt$hiv_hpv18
 # categorize num_condomless_anal_sex_receptive_w1"
 
 table(hpv_net %v% "num_condomless_anal_sex_receptive_w1", exclude=NULL)
-dt <- 
+dt <- ## NEEDS TO BE CHECKED
   dt %>% 
   mutate(
     num_condomless_anal_sex_receptive.cat = if_else(dt$num_condomless_anal_sex_receptive_w1 > 0, 
