@@ -14,7 +14,6 @@ library(igraph)
 data_path <- "../sent_to_Aditya_02092020/"
 dyad <- read.csv(paste0(data_path, "HPV_dyad_2019-12-16.csv"))
 dt <- read.csv(paste0(data_path, "aditya_hpv_final_v3_attributes_referred_by_final.csv"), as.is = T)
-#att_data <- read.csv(paste0(data_path, "HPV_attribute.csv"))
 
 
 # Replace missing values in each column by median
@@ -28,36 +27,42 @@ for(i in 3:ncol(dt)){
 # Convert to network object ---------------------------
 
 dyad_el <- as.data.frame(dyad[,c(1:2)])
-dyad_el_mat <- dyad_el
+dyad_mat <- as.matrix(dyad[,c(1:2)])
 dyad_el <- apply(dyad_el, c(1:2), "as.factor")
 
 attr(dyad_el, "n") <- length(dt$caseid)
-hpv_net <- network::as.network(dyad_el, directed=FALSE)
-network.vertex.names(hpv_net) <- dt$caseid
+
+hpv_net <- network::as.network(dyad_el)
+vertex.names <- network.vertex.names(hpv_net)
+
+isolates_ids <- dt$caseid[c( 
+  ###code below reindexes so that isolates are currently ordered in the network,
+  ### and degrees of all vertices are recorded correctly
+  intersect(which(!dt$caseid %in% dyad[,1]), which(!dt$caseid %in% dyad[,2])))
+  ]
+n.isolates <- length(isolates_ids)
+
+vertex.names[which(duplicated(vertex.names))] <- isolates_ids
+network.vertex.names(hpv_net) <- vertex.names
 
 network.size(hpv_net)
 network.edgecount(hpv_net)
 
+  ### odering done
 
-# Check why attribute file has 143 rows but network object has 141 nodes ---------------------------
+# Check ordering of nodes and corresponding degrees ---------------------------
 
 length(dt$caseid) #n=160
 network.size(hpv_net) #n=160
 hpv_net %v% "vertex.names"
 length(unique(hpv_net %v% "vertex.names")) # All  are unique
 
-idx.notin <- which(!(dt$ID) %in% (hpv_net %v% "vertex.names"))
-(dt$ID)[idx.notin] #two participants are in the dt dataset but not in network
-
-
-# Reorder vertex ids to fill in attributes ---------------------------
-
 new.order <- sort.int(hpv_net %v% "vertex.names", index.return = TRUE)
 new.order$ix
 permute.vertexIDs(hpv_net, new.order$ix)
 
 hpv_net %v% "vertex.names"
-
+sna::degree(hpv_net)
 
 # Add attributes to network object
 
