@@ -2,6 +2,7 @@
 
 rm(list=ls())
 
+
 # Load libraries ---------------------------
 
 library(dplyr)
@@ -81,7 +82,11 @@ hpv_net %v% "hr68" <- dt$hr_68
 
 hpv_net %v% "HIV" <- dt$hiv_w1
 hpv_net %v% "fta" <- dt$fta_w1
-#hpv_net %v% "num_condomless_anal_sex_receptive_w1" <- dt$num_condomless_anal_sex_receptive_w1
+
+hpv_net %v% "num_anal_partners_w1" <- dt$num_anal_partners_w1 #anal sex behavior
+hpv_net %v% "num_anal_sex_insertive_2_w1" <- dt$num_anal_sex_insertive_2_w1
+hpv_net %v% "num_anal_sex_receptive_2_w1" <- dt$num_anal_sex_receptive_2_w1
+
 hpv_net %v% "past12m_homeless_w1" <- dt$past12m_homeless_w1
 
 # sexual identity
@@ -95,9 +100,16 @@ dt$sex.id.cat <-
 
 hpv_net %v% "sex.id.cat" <- dt$sex.id.cat
 
-# greater than one condomless receptive anal sex partner
-##dt$greq1_condomless_anal_sex_receptive_w1 <- 
-  ##ifelse(dt$num_condomless_anal_sex_receptive_w1 >= 1, 1, 0)
+# greater than one partner on various anal sex behaviors 
+dt$greq1_num_anal_partners_w1  <- 
+  ifelse(dt$num_anal_partners_w1  >= 1, 1, 0)
+
+dt$greq1_num_anal_sex_insertive_2_w1 <- 
+  ifelse(dt$num_anal_sex_insertive_2_w1 >= 1, 1, 0)
+
+dt$greq1_num_anal_sex_receptive_2_w1 <- 
+  ifelse(dt$num_anal_sex_receptive_2_w1 >= 1, 1, 0)
+
 
 ##hpv_net %v% "greq1_condomless_anal_sex_receptive_w1" <- 
   ##dt$greq1_condomless_anal_sex_receptive_w1 
@@ -155,7 +167,11 @@ assortativity(hpv_ig, dt$hr_68)
 
 assortativity(hpv_ig, dt$hiv_w1)
 assortativity(hpv_ig, dt$fta_w1)
-assortativity(hpv_ig, dt$greq1_condomless_anal_sex_receptive_w1)
+
+assortativity(hpv_ig, dt$greq1_num_anal_partners_w1)
+assortativity(hpv_ig, dt$greq1_num_anal_sex_insertive_2_w1)
+assortativity(hpv_ig, dt$greq1_num_anal_sex_receptive_2_w1)
+
 assortativity(hpv_ig, dt$age.cat)
 assortativity(hpv_ig, dt$sex.id.cat)
 assortativity(hpv_ig, dt$educ.cat)
@@ -179,24 +195,28 @@ vcount(hpv_ig_hivpos)
 
 dim(dt.hivpos)
 
-assortativity(hpv_ig_hivpos, dt.hivpos$HR_16)
-assortativity(hpv_ig_hivpos, dt.hivpos$HR_18)
-assortativity(hpv_ig_hivpos, dt.hivpos$HR_16_or_18)
-assortativity(hpv_ig_hivpos, dt.hivpos$HR_16_and_18)
-assortativity(hpv_ig_hivpos, dt.hivpos$HR_31)
-assortativity(hpv_ig_hivpos, dt.hivpos$HR_33)
-assortativity(hpv_ig_hivpos, dt.hivpos$HR_35)
-assortativity(hpv_ig_hivpos, dt.hivpos$HR_39)
-assortativity(hpv_ig_hivpos, dt.hivpos$HR_45)
-assortativity(hpv_ig_hivpos, dt.hivpos$HR_51)
-assortativity(hpv_ig_hivpos, dt.hivpos$HR_52)
-assortativity(hpv_ig_hivpos, dt.hivpos$HR_58)
-assortativity(hpv_ig_hivpos, dt.hivpos$HR_59)
-assortativity(hpv_ig_hivpos, dt.hivpos$HR_68)
+assortativity(hpv_ig_hivpos, dt.hivpos$hr_16)
+assortativity(hpv_ig_hivpos, dt.hivpos$hr_18)
+assortativity(hpv_ig_hivpos, dt.hivpos$hr_16_or_18)
+assortativity(hpv_ig_hivpos, dt.hivpos$hr_16_and_18)
+assortativity(hpv_ig_hivpos, dt.hivpos$hr_31)
+assortativity(hpv_ig_hivpos, dt.hivpos$hr_33)
+assortativity(hpv_ig_hivpos, dt.hivpos$hr_35)
+assortativity(hpv_ig_hivpos, dt.hivpos$hr_39)
+assortativity(hpv_ig_hivpos, dt.hivpos$hr_45)
+assortativity(hpv_ig_hivpos, dt.hivpos$hr_51)
+assortativity(hpv_ig_hivpos, dt.hivpos$hr_52)
+assortativity(hpv_ig_hivpos, dt.hivpos$hr_58)
+assortativity(hpv_ig_hivpos, dt.hivpos$hr_59)
+assortativity(hpv_ig_hivpos, dt.hivpos$hr_68)
 
 assortativity(hpv_ig_hivpos, dt.hivpos$hiv_w1)
 assortativity(hpv_ig_hivpos, dt.hivpos$fta_w1)
-assortativity(hpv_ig_hivpos, dt.hivpos$greq1_condomless_anal_sex_receptive_w1)
+
+assortativity(hpv_ig_hivpos, dt.hivpos$greq1_num_anal_partners_w1)
+assortativity(hpv_ig_hivpos, dt.hivpos$greq1_num_anal_sex_insertive_2_w1)
+assortativity(hpv_ig_hivpos, dt.hivpos$greq1_num_anal_sex_receptive_2_w1)
+
 assortativity(hpv_ig_hivpos, dt.hivpos$age.cat)
 assortativity(hpv_ig_hivpos, dt.hivpos$sex.id.cat)
 assortativity(hpv_ig_hivpos, dt.hivpos$educ.cat)
@@ -219,24 +239,28 @@ vcount(hpv_ig_hivneg)
 
 dim(dt.hivneg)
 
-assortativity(hpv_ig_hivneg, dt.hivneg$HR_16)
-assortativity(hpv_ig_hivneg, dt.hivneg$HR_18)
-assortativity(hpv_ig_hivneg, dt.hivneg$HR_16_or_18)
-assortativity(hpv_ig_hivneg, dt.hivneg$HR_16_and_18) #all HIV-negatives have 0 for HR 16 and 18: xtabs(~as.factor(vertex_attr(hpv_ig, "HR_16_and_18"))+as.factor(vertex_attr(hpv_ig, "HIV")))
-assortativity(hpv_ig_hivneg, dt.hivneg$HR_31)
-assortativity(hpv_ig_hivneg, dt.hivneg$HR_33)
-assortativity(hpv_ig_hivneg, dt.hivneg$HR_35)
-assortativity(hpv_ig_hivneg, dt.hivneg$HR_39)
-assortativity(hpv_ig_hivneg, dt.hivneg$HR_45)
-assortativity(hpv_ig_hivneg, dt.hivneg$HR_51)
-assortativity(hpv_ig_hivneg, dt.hivneg$HR_52)
-assortativity(hpv_ig_hivneg, dt.hivneg$HR_58)
-assortativity(hpv_ig_hivneg, dt.hivneg$HR_59)
-assortativity(hpv_ig_hivneg, dt.hivneg$HR_68)
+assortativity(hpv_ig_hivneg, dt.hivneg$hr_16)
+assortativity(hpv_ig_hivneg, dt.hivneg$hr_18)
+assortativity(hpv_ig_hivneg, dt.hivneg$hr_16_or_18)
+assortativity(hpv_ig_hivneg, dt.hivneg$hr_16_and_18) #all HIV-negatives have 0 for hr 16 and 18: xtabs(~as.factor(vertex_attr(hpv_ig, "hr_16_and_18"))+as.factor(vertex_attr(hpv_ig, "HIV")))
+assortativity(hpv_ig_hivneg, dt.hivneg$hr_31)
+assortativity(hpv_ig_hivneg, dt.hivneg$hr_33)
+assortativity(hpv_ig_hivneg, dt.hivneg$hr_35)
+assortativity(hpv_ig_hivneg, dt.hivneg$hr_39)
+assortativity(hpv_ig_hivneg, dt.hivneg$hr_45)
+assortativity(hpv_ig_hivneg, dt.hivneg$hr_51)
+assortativity(hpv_ig_hivneg, dt.hivneg$hr_52)
+assortativity(hpv_ig_hivneg, dt.hivneg$hr_58)
+assortativity(hpv_ig_hivneg, dt.hivneg$hr_59)
+assortativity(hpv_ig_hivneg, dt.hivneg$hr_68)
 
 assortativity(hpv_ig_hivneg, dt.hivneg$hiv_w1)
 assortativity(hpv_ig_hivneg, dt.hivneg$fta_w1)
-assortativity(hpv_ig_hivneg, dt.hivneg$greq1_condomless_anal_sex_receptive_w1)
+
+assortativity(hpv_ig_hivneg, dt.hivneg$greq1_num_anal_partners_w1)
+assortativity(hpv_ig_hivneg, dt.hivneg$greq1_num_anal_sex_insertive_2_w1)
+assortativity(hpv_ig_hivneg, dt.hivneg$greq1_num_anal_sex_receptive_2_w1)
+
 assortativity(hpv_ig_hivneg, dt.hivneg$age.cat)
 assortativity(hpv_ig_hivneg, dt.hivneg$sex.id.cat)
 assortativity(hpv_ig_hivneg, dt.hivneg$educ.cat)
