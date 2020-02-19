@@ -33,7 +33,7 @@ dyad_el <- apply(dyad_el, c(1:2), "as.factor")
 
 attr(dyad_el, "n") <- length(dt$caseid)
 
-hpv_net <- network::as.network(dyad_el)
+hpv_net <- network::as.network(dyad_el, directed = FALSE)
 vertex.names <- network.vertex.names(hpv_net)
 
 isolates_ids <- dt$caseid[c( 
