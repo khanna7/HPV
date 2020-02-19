@@ -38,7 +38,7 @@ hpv_net %v% "any_type" <- dt$any_type
 hpv_net %v% "age" <- dt$age_w1 
 
 #HR 18
-hpv_net %v% "hr18" <- dt$HR_18
+hpv_net %v% "hr18" <- dt$hr_18
 
 # mult hr type
 dt <-
@@ -99,8 +99,8 @@ hpv_net %v% "hr_hpv_any" <- dt$hr_hpv_any
 
 
 # sqrt of num_condomless_anal_sex_receptive_w1
-hpv_net %v% "sqrt.num_condomless_anal_sex_receptive_w1" <- sqrt(hpv_net %v% 
-                                                                  "num_condomless_anal_sex_receptive_w1")
+hpv_net %v% "sqrt.num_anal_sex_receptive_2_w1" <- sqrt(hpv_net %v% 
+                                                                  "num_anal_sex_receptive_2_w1")
 
 # HIV_HPV45 nodemix
 
@@ -170,17 +170,17 @@ hpv_net %v% "hiv_hpv18" <- dt$hiv_hpv18
 
 
 
-# categorize num_condomless_anal_sex_receptive_w1"
+# categorize num_anal_sex_receptive_w1"
 
-table(hpv_net %v% "num_condomless_anal_sex_receptive_w1", exclude=NULL)
+table(hpv_net %v% "num_anal_sex_receptive_2_w1", exclude=NULL)
 dt <- ## NEEDS TO BE CHECKED
   dt %>% 
   mutate(
-    num_condomless_anal_sex_receptive.cat = if_else(dt$num_condomless_anal_sex_receptive_w1 > 0, 
+    num_anal_sex_receptive_2_w1.cat = if_else(dt$num_anal_sex_receptive_2_w1 > 0, 
                                                     1, 0)
   )
-table(dt$num_condomless_anal_sex_receptive.cat, exclude = NULL)
-hpv_net %v% "num_condomless_anal_sex_receptive.cat" <- dt$num_condomless_anal_sex_receptive.cat
+table(dt$num_anal_sex_receptive_2_w1.cat, exclude = NULL)
+hpv_net %v% "num_anal_sex_receptive_2_w1.cat" <- dt$num_anal_sex_receptive_2_w1.cat
 
 
 # Save image ---------------------------
