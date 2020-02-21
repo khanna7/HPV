@@ -46,17 +46,17 @@ model_1.33 <- update(form.model1, ~. +nodematch("hr33"))
 fit.model_1.33 <- ergm(model_1.33, eval.loglik = FALSE)  
 summary(fit.model_1.33)
 
-model_1.35 <- update(form.model1, ~. +nodematch("hr35"))
-fit.model_1.35 <- ergm(model_1.35, eval.loglik = FALSE)  
-summary(fit.model_1.35)
+#model_1.35 <- update(form.model1, ~. +nodematch("hr35")) #not converging
+#fit.model_1.35 <- ergm(model_1.35, eval.loglik = FALSE)  
+#summary(fit.model_1.35)
 
 model_1.39 <- update(form.model1, ~. +nodematch("hr39"))
 fit.model_1.39 <- ergm(model_1.39, eval.loglik = FALSE)  
 summary(fit.model_1.39)
 
-model_1.45 <- update(form.model1, ~. +nodematch("hr45"))
-fit.model_1.45 <- ergm(model_1.45, eval.loglik = FALSE)  
-summary(fit.model_1.45)
+# model_1.45 <- update(form.model1, ~. +nodematch("hr45"))
+# fit.model_1.45 <- ergm(model_1.45, eval.loglik = FALSE)  
+# summary(fit.model_1.45)
 
 model_1.51 <- update(form.model1, ~. +nodematch("hr51"))
 fit.model_1.51 <- ergm(model_1.51, eval.loglik = FALSE)  
@@ -82,9 +82,9 @@ summary(fit.model_1.68)
 # fit.model_1.hr_16_and_18 <- ergm(model_1.hr_16_and_18, eval.loglik = FALSE)  
 # summary(fit.model_1.hr_16_and_18)
 
-model_1.hr_16_or_18 <- update(form.model1, ~. +nodematch("hr_16_or_18"))
-fit.model_1.hr_16_or_18 <- ergm(model_1.hr_16_or_18, eval.loglik = FALSE)  
-summary(fit.model_1.hr_16_or_18)
+#model_1.hr_16_or_18 <- update(form.model1, ~. +nodematch("hr_16_or_18")) #not converging
+#fit.model_1.hr_16_or_18 <- ergm(model_1.hr_16_or_18, eval.loglik = FALSE)  
+#summary(fit.model_1.hr_16_or_18)
 
 #model_1.hiv<- update(form.model1, ~. +nodematch("HIV", diff=TRUE)) #DOES NOT FIT
 #fit.model_1.hiv<- ergm(model_1.hiv, eval.loglik = FALSE)  
