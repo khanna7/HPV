@@ -1,4 +1,5 @@
 # Compute statistics for Tables 1 and 2
+# (See `/Volumes/cche-lab/UAthens/Ben/rds-weighting-analysis` for Aditya's last weighting analysis)
 
 rm(list=ls())
 
@@ -10,7 +11,10 @@ library(dplyr)
 
 # Read data ---------------------------
 
-dt <- read.csv("../Aditya_11032019/dataset_used for create_dataset_HPV1 & extract_dyad/houston_hpv.csv", as.is = T)
+data_path <- "../sent_to_Aditya_02092020/"
+dyad <- read.csv(paste0(data_path, "HPV_dyad_2019-12-16.csv"))
+dt <- read.csv(paste0(data_path, "aditya_hpv_final_v3_attributes_referred_by_final.csv"), as.is = T)
+
 
 #complete path name: 
  #/Volumes/akhanna/bulkstorage_projects_bsd_computer/HPV-Chicago-Fujimoto/
@@ -27,19 +31,19 @@ age_groups <- dt %>%
          "21-25" = (age_w1 >= 21 & age_w1 < 26),
          "26-29" = (age_w1 >= 26 & age_w1 < 30 )) 
 
-table(age_groups[["18-20"]])
-table(age_groups[["18-20"]])/nrow(age_groups)   
+table(age_groups[["18-20"]], exclude = NULL)
+table(age_groups[["18-20"]], exclude = NULL)/nrow(age_groups)   
 
-table(age_groups[["21-25"]])
-table(age_groups[["21-25"]])/nrow(age_groups)   
+table(age_groups[["21-25"]], exclude = NULL)
+table(age_groups[["21-25"]], exclude = NULL)/nrow(age_groups)   
 
-table(age_groups[["26-29"]])
-table(age_groups[["26-29"]])/nrow(age_groups)
+table(age_groups[["26-29"]], exclude = NULL)
+table(age_groups[["26-29"]], exclude = NULL)/nrow(age_groups)
 
 # race
 race.cat <-
   dt %>% 
-  select(race.x) %>% 
+  select(race) %>% 
   pull()
 
 race.cat <- recode(race.cat, 
@@ -48,8 +52,8 @@ race.cat <- recode(race.cat,
                    "3" = "Black", 
                    "4" = "Other")
 
-table(race.cat)
-table(race.cat)/length(race.cat)
+table(race.cat, exclude = NULL)
+table(race.cat, exclude = NULL)/length(race.cat)
 
 # sexual identity
 sex.id <-
@@ -65,8 +69,8 @@ sex.id.cat <-
          "4" = "Other"
   )
 
-table(sex.id.cat)
-table(sex.id.cat)/length(sex.id.cat)
+table(sex.id.cat, exclude = NULL)
+table(sex.id.cat, exclude = NULL)/length(sex.id.cat)
 
 # education
 educ <- 
@@ -84,27 +88,21 @@ educ.cat <-
          "6" = "High School or GED",
   )
 
-table(educ.cat)
-table(educ.cat)/length(educ.cat)
+table(educ.cat, exclude = NULL)
+table(educ.cat, exclude = NULL)/length(educ.cat)
 
 # homeless
 table(dt$past12m_homeless_w1, exclude = NULL)
 table(dt$past12m_homeless_w1, exclude = NULL)/length(dt$past12m_homeless_w1)
 
-#  Number of sex partners where ego's position is receptive and inconsistent condom use with alters
-table(dt$num_condomless_anal_sex_receptive_w1, exclude = NULL)
+#  Number of sex partners where ego's position is receptive 
+table(dt$num_anal_sex_receptive_2_w1, exclude = NULL)
 
-length(which(dt$num_condomless_anal_sex_receptive_w1 < 2))
-length(which(dt$num_condomless_anal_sex_receptive_w1 < 2))/nrow(dt)
+length(which(dt$num_anal_sex_receptive_2_w1 < 2))
+length(which(dt$num_anal_sex_receptive_2_w1 < 2))/nrow(dt)
 
-length(which(dt$num_condomless_anal_sex_receptive_w1 >= 2))
-length(which(dt$num_condomless_anal_sex_receptive_w1 >= 2))/nrow(dt)
-
-#  Number of sex partners where ego's position is receptive
-# table(dt$num_)
-# The dataset I have: “../Aditya_11032019/dataset_used for create_dataset_HPV1 & extract_dyad/houston_hpv.csv", does 
-# not contain the “num_anal_sex_receptive_2_w1” variable. 
-# I have reported the number of condomless anal sex partners. 
+length(which(dt$num_anal_sex_receptive_2_w1 >= 2))
+length(which(dt$num_anal_sex_receptive_2_w1 >= 2))/nrow(dt)
 
 # hiv status
 table(dt$hiv_w1, exclude = NULL)
@@ -121,25 +119,25 @@ dt <-
   mutate(
     hr_hpv_any = if_else(
       (
-        HR_16 == 1 | 
-          HR_18 == 1 |
-          HR_31 == 1 |                                     
-          HR_33 == 1 |                                       
-          HR_35 == 1 |                                     
-          HR_39 == 1 |                                       
-          HR_45 == 1 |                                     
-          HR_51 == 1 |                                       
-          HR_52 == 1 |                                     
-          HR_56 == 1 |                                       
-          HR_58 == 1 |                                       
-          HR_59 == 1 |                                     
-          HR_68 == 1
+        hr_16 == 1 | 
+          hr_18 == 1 |
+          hr_31 == 1 |                                     
+          hr_33 == 1 |                                       
+          hr_35 == 1 |                                     
+          hr_39 == 1 |                                       
+          hr_45 == 1 |                                     
+          hr_51 == 1 |                                       
+          hr_52 == 1 |                                     
+          hr_56 == 1 |                                       
+          hr_58 == 1 |                                       
+          hr_59 == 1 |                                     
+          hr_68 == 1
        ), 
       1, 0)
     )
 table(dt[["hr_hpv_any"]], exclude=NULL)
   
-# xtab HIV-infection with HR HPV
+# xtab HIV-infection with hr HPV
 xtabs(~factor(hr_hpv_any, exclude = NULL)+
         factor(hiv_w1, exclude = NULL), data=dt)
 
@@ -149,19 +147,19 @@ dt <-
   dt %>% 
   mutate(
     num_hr_hpv = 
-      HR_16 + 
-      HR_18 +
-      HR_31+                                     
-      HR_33+                                       
-      HR_35+                                     
-      HR_39+                                       
-      HR_45+                                     
-      HR_51+                                       
-      HR_52+                                     
-      HR_56+                                       
-      HR_58+                                       
-      HR_59+                                     
-      HR_68 
+      hr_16 + 
+      hr_18 +
+      hr_31+                                     
+      hr_33+                                       
+      hr_35+                                     
+      hr_39+                                       
+      hr_45+                                     
+      hr_51+                                       
+      hr_52+                                     
+      hr_56+                                       
+      hr_58+                                       
+      hr_59+                                     
+      hr_68 
   )
 summary(dt$num_hr_hpv)
 
@@ -175,7 +173,7 @@ dt %>% #HIV-uninfected
   filter(hiv_w1 == 0) %>%
   summary(num_hr_hpv) 
 
-# multiple HR types: summary
+# multiple hr types: summary
 
 dt <-
   dt %>% 
@@ -194,7 +192,7 @@ dt %>% # by HIV status
 dt <-
   dt %>% 
   mutate(
-    hpv_16_and_18 = if_else((HR_16 == 1 & HR_18 == 1), 1, 0)
+    hpv_16_and_18 = if_else((hr_16 == 1 & hr_18 == 1), 1, 0)
   )
 table(dt$hpv_16_and_18, exclude=NULL)
 
@@ -208,7 +206,7 @@ dt %>% # by HIV status
 dt <-
   dt %>% 
   mutate(
-    hpv_16_or_18 = if_else((HR_16 == 1 | HR_18 == 1), 1, 0)
+    hpv_16_or_18 = if_else((hr_16 == 1 | hr_18 == 1), 1, 0)
   )
 table(dt$hpv_16_or_18, exclude=NULL)
 
@@ -224,15 +222,15 @@ dt <-
   mutate(
     nine.val.vac = if_else(
       (
-        #HR_6 == 1 | 
-          LR_11 == 1 |
-          HR_16 == 1 |                                     
-          HR_18 == 1 |                                       
-          HR_31 == 1 |                                     
-          HR_33 == 1 |                                       
-          HR_45 == 1 |                                     
-          HR_52 == 1 |                                       
-          HR_58 == 1 
+        #hr_6 == 1 | 
+          lr_11 == 1 |
+          hr_16 == 1 |                                     
+          hr_18 == 1 |                                       
+          hr_31 == 1 |                                     
+          hr_33 == 1 |                                       
+          hr_45 == 1 |                                     
+          hr_52 == 1 |                                       
+          hr_58 == 1 
       ), 
       1, 0)
   )
@@ -255,124 +253,124 @@ dt %>%
   group_by(hiv_w1) %>%
   summarise(n=n()) 
 
-## HR 16
+## hr 16
 dt %>% 
-  filter(HR_16 == 1) %>%
+  filter(hr_16 == 1) %>%
   summarise(n=n()) %>%
   mutate(prev = n/nrow(dt))
   
 dt %>% 
-  filter(HR_16 == 1) %>%
+  filter(hr_16 == 1) %>%
   group_by(hiv_w1) %>% 
   summarise(n=n()) 
 
 
-## HR 18
+## hr 18
 dt %>% 
-  filter(HR_18 == 1) %>%
+  filter(hr_18 == 1) %>%
   summarise(n=n()) 
 
 dt %>% 
-  filter(HR_18 == 1) %>%
+  filter(hr_18 == 1) %>%
   group_by(hiv_w1) %>% 
   summarise(n=n()) 
 
-## HR 31
+## hr 31
 dt %>% 
-  filter(HR_31 == 1) %>%
+  filter(hr_31 == 1) %>%
   summarise(n=n()) 
 
 dt %>% 
-  filter(HR_31 == 1) %>%
+  filter(hr_31 == 1) %>%
   group_by(hiv_w1) %>% 
   summarise(n=n()) 
 
-## HR 33
+## hr 33
 dt %>% 
-  filter(HR_33 == 1) %>%
+  filter(hr_33 == 1) %>%
   summarise(n=n()) 
 
 dt %>% 
-  filter(HR_33 == 1) %>%
-  group_by(hiv_w1) %>% 
-  summarise(n=n())
-
-## HR 35
-dt %>% 
-  filter(HR_35 == 1) %>%
-  summarise(n=n()) 
-
-dt %>% 
-  filter(HR_35 == 1) %>%
+  filter(hr_33 == 1) %>%
   group_by(hiv_w1) %>% 
   summarise(n=n())
 
-## HR 39
+## hr 35
 dt %>% 
-  filter(HR_39 == 1) %>%
+  filter(hr_35 == 1) %>%
   summarise(n=n()) 
 
 dt %>% 
-  filter(HR_39 == 1) %>%
+  filter(hr_35 == 1) %>%
   group_by(hiv_w1) %>% 
   summarise(n=n())
 
-## HR 45
+## hr 39
 dt %>% 
-  filter(HR_45 == 1) %>%
+  filter(hr_39 == 1) %>%
   summarise(n=n()) 
 
 dt %>% 
-  filter(HR_45 == 1) %>%
+  filter(hr_39 == 1) %>%
   group_by(hiv_w1) %>% 
   summarise(n=n())
 
-## HR 51
+## hr 45
 dt %>% 
-  filter(HR_51 == 1) %>%
+  filter(hr_45 == 1) %>%
   summarise(n=n()) 
 
 dt %>% 
-  filter(HR_51 == 1) %>%
+  filter(hr_45 == 1) %>%
   group_by(hiv_w1) %>% 
   summarise(n=n())
 
-## HR 52
+## hr 51
 dt %>% 
-  filter(HR_52 == 1) %>%
+  filter(hr_51 == 1) %>%
   summarise(n=n()) 
 
 dt %>% 
-  filter(HR_52 == 1) %>%
+  filter(hr_51 == 1) %>%
   group_by(hiv_w1) %>% 
   summarise(n=n())
 
-## HR 58
+## hr 52
 dt %>% 
-  filter(HR_58 == 1) %>%
+  filter(hr_52 == 1) %>%
   summarise(n=n()) 
 
 dt %>% 
-  filter(HR_58 == 1) %>%
+  filter(hr_52 == 1) %>%
   group_by(hiv_w1) %>% 
   summarise(n=n())
 
-## HR 59
+## hr 58
 dt %>% 
-  filter(HR_59 == 1) %>%
+  filter(hr_58 == 1) %>%
   summarise(n=n()) 
 
 dt %>% 
-  filter(HR_59 == 1) %>%
+  filter(hr_58 == 1) %>%
   group_by(hiv_w1) %>% 
   summarise(n=n())
 
-## HR 68
+## hr 59
 dt %>% 
-  filter(HR_68 == 1) %>%
+  filter(hr_59 == 1) %>%
   summarise(n=n()) 
 
 dt %>% 
-  filter(HR_68 == 1) %>%
+  filter(hr_59 == 1) %>%
+  group_by(hiv_w1) %>% 
+  summarise(n=n())
+
+## hr 68
+dt %>% 
+  filter(hr_68 == 1) %>%
+  summarise(n=n()) 
+
+dt %>% 
+  filter(hr_68 == 1) %>%
   group_by(hiv_w1) %>% 
   summarise(n=n())
