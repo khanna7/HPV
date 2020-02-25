@@ -374,3 +374,8 @@ dt %>%
   filter(hr_68 == 1) %>%
   group_by(hiv_w1) %>% 
   summarise(n=n())
+
+
+# Save image ---------------------------
+
+save.image(file="unweighted-desriptives.RData")
