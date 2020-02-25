@@ -10,12 +10,9 @@ library(RDS)
 library(dplyr)
 
 
-# Read data ---------------------------
+# Load data ---------------------------
 
-data_path <- "../sent_to_Aditya_02092020/"
-dyad <- read.csv(paste0(data_path, "HPV_dyad_2019-12-16.csv"))
-dt <- read.csv(paste0(data_path, "aditya_hpv_final_v3_attributes_referred_by_final.csv"), as.is = T)
-
+load(file="unweighted-desriptives.RData")
 
 # Data transformations -----
 
