@@ -80,7 +80,7 @@ svymean(x=~hr_59, na.rm = TRUE, design = dt.hivpos.svydesign)
 svymean(x=~hr_68, na.rm = TRUE, design = dt.hivpos.svydesign)
 
 
-# Compute weighted summaries (HIV-positives only) ---------------------------
+# Compute weighted summaries (HIV-negatives only) ---------------------------
 
 rds.dt.hivneg <-
   rds.dt %>%
