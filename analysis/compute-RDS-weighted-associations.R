@@ -47,3 +47,66 @@ svymean(x=~hr_52, na.rm = TRUE, design = dt.svydesign)
 svymean(x=~hr_58, na.rm = TRUE, design = dt.svydesign)
 svymean(x=~hr_59, na.rm = TRUE, design = dt.svydesign)
 svymean(x=~hr_68, na.rm = TRUE, design = dt.svydesign)
+
+
+# Compute weighted summaries (HIV-positives only) ---------------------------
+
+rds.dt.hivpos <-
+  rds.dt %>%
+  filter(hiv_w1 == 1)
+
+dt.hivpos.svydesign <- svydesign(data = rds.dt.hivpos,
+                          ids = ~caseid,
+                          weights = ~gile.wt)
+
+svymean(x = ~age_w1, na.rm = TRUE, design = dt.hivpos.svydesign)
+svymean(x=~hr_hpv_any, na.rm = TRUE, design = dt.hivpos.svydesign)
+svymean(x=~num_hr_hpv, na.rm = TRUE, design = dt.hivpos.svydesign)
+svymean(x=~mult_hr_type, na.rm = TRUE, design = dt.hivpos.svydesign)
+svymean(x=~hpv_16_and_18, na.rm = TRUE, design = dt.hivpos.svydesign)
+svymean(x=~hpv_16_or_18, na.rm = TRUE, design = dt.hivpos.svydesign)
+svymean(x=~nine.val.vac, na.rm = TRUE, design = dt.hivpos.svydesign)
+svymean(x=~hr_16, na.rm = TRUE, design = dt.hivpos.svydesign)
+svymean(x=~hr_18, na.rm = TRUE, design = dt.hivpos.svydesign)
+svymean(x=~hr_31, na.rm = TRUE, design = dt.hivpos.svydesign)
+svymean(x=~hr_33, na.rm = TRUE, design = dt.hivpos.svydesign)
+svymean(x=~hr_35, na.rm = TRUE, design = dt.hivpos.svydesign)
+svymean(x=~hr_39, na.rm = TRUE, design = dt.hivpos.svydesign)
+svymean(x=~hr_45, na.rm = TRUE, design = dt.hivpos.svydesign)
+svymean(x=~hr_51, na.rm = TRUE, design = dt.hivpos.svydesign)
+svymean(x=~hr_52, na.rm = TRUE, design = dt.hivpos.svydesign)
+svymean(x=~hr_58, na.rm = TRUE, design = dt.hivpos.svydesign)
+svymean(x=~hr_59, na.rm = TRUE, design = dt.hivpos.svydesign)
+svymean(x=~hr_68, na.rm = TRUE, design = dt.hivpos.svydesign)
+
+
+# Compute weighted summaries (HIV-positives only) ---------------------------
+
+rds.dt.hivneg <-
+  rds.dt %>%
+  filter(hiv_w1 == 0)
+
+dt.hivneg.svydesign <- svydesign(data = rds.dt.hivneg,
+                                 ids = ~caseid,
+                                 weights = ~gile.wt)
+
+svymean(x = ~age_w1, na.rm = TRUE, design = dt.hivneg.svydesign)
+svymean(x=~hr_hpv_any, na.rm = TRUE, design = dt.hivneg.svydesign)
+svymean(x=~num_hr_hpv, na.rm = TRUE, design = dt.hivneg.svydesign)
+svymean(x=~mult_hr_type, na.rm = TRUE, design = dt.hivneg.svydesign)
+svymean(x=~hpv_16_and_18, na.rm = TRUE, design = dt.hivneg.svydesign)
+svymean(x=~hpv_16_or_18, na.rm = TRUE, design = dt.hivneg.svydesign)
+svymean(x=~nine.val.vac, na.rm = TRUE, design = dt.hivneg.svydesign)
+svymean(x=~hr_16, na.rm = TRUE, design = dt.hivneg.svydesign)
+svymean(x=~hr_18, na.rm = TRUE, design = dt.hivneg.svydesign)
+svymean(x=~hr_31, na.rm = TRUE, design = dt.hivneg.svydesign)
+svymean(x=~hr_33, na.rm = TRUE, design = dt.hivneg.svydesign)
+svymean(x=~hr_35, na.rm = TRUE, design = dt.hivneg.svydesign)
+svymean(x=~hr_39, na.rm = TRUE, design = dt.hivneg.svydesign)
+svymean(x=~hr_45, na.rm = TRUE, design = dt.hivneg.svydesign)
+svymean(x=~hr_51, na.rm = TRUE, design = dt.hivneg.svydesign)
+svymean(x=~hr_52, na.rm = TRUE, design = dt.hivneg.svydesign)
+svymean(x=~hr_58, na.rm = TRUE, design = dt.hivneg.svydesign)
+svymean(x=~hr_59, na.rm = TRUE, design = dt.hivneg.svydesign)
+svymean(x=~hr_68, na.rm = TRUE, design = dt.hivneg.svydesign)
+
