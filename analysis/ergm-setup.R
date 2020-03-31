@@ -2,12 +2,14 @@
 
 rm(list=ls())
 
+
 # N.B.  ---------------------------
 
 # This file uses code from ERGM analysis first performed in Fall 2018: 
 # https://github.com/khanna7/HPV/blob/master/analysis/HPV-analysis/analysis.R
 # binary containing input data generated in "assortativity.R" at:
 # https://github.com/khanna7/HPV/blob/master/analysis/HPV-analysis/analysis.R
+
 
 # Libraries ---------------------------
 
@@ -182,6 +184,10 @@ dt <- ## NEEDS TO BE CHECKED
 table(dt$num_anal_sex_receptive_2_w1.cat, exclude = NULL)
 hpv_net %v% "num_anal_sex_receptive_2_w1.cat" <- dt$num_anal_sex_receptive_2_w1.cat
 
+
+# add sexual identity
+hpv_net %v% "sexual_identity_w1" <- dt$sexual_identity_w1 
+hpv_net %v% "sex.id.cat" <- dt$sex.id.cat
 
 # Save image ---------------------------
 
