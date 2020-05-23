@@ -1,0 +1,57 @@
+---
+title: "Comparison of datasets"
+output: html_notebook
+---
+
+```{r}
+rm(list=ls())
+```
+
+```{r}
+library(compareDF)
+library(htmlTable)
+library(janitor)
+```
+
+First read the new data.
+
+```{r}
+new_data_path <- "../sent_to_Aditya_02092020/"
+new_dyad <- read.csv(paste0(new_data_path, "HPV_dyad_2019-12-16.csv"))
+new_dt <- read.csv(paste0(new_data_path, "aditya_hpv_final_v3_attributes_referred_by_final.csv"), as.is = T)
+```
+
+Next read the old data. 
+
+
+```{r}
+old_dt <- read.csv("../Aditya_11032019/dataset_used for create_dataset_HPV1 & extract_dyad/houston_hpv.csv", as.is = T)
+```
+
+Compare the two datasets:
+The new dataset has dimensions `r dim(new_dt)` rows and the dimensions of the old dataset are `r dim(old_dt)`. T
+
+Convert the column names in both data frames to lower case to make a comparison:
+```{r}
+library(data.table)
+setnames(old_dt, tolower(names(old_dt)))
+setnames(new_dt, tolower(names(new_dt)))
+```
+
+Now compare the columns in the two datasets:
+
+```{r}
+compare_df_cols(old_dt, new_dt)
+```
+
+And lets compare some specific columns of interest in the two datasets:
+```{r}
+summary(old_dt$hr_16)
+summary(new_dt$hr_16)
+
+summary(old_dt$hr_18)
+summary(new_dt$hr_18)
+
+summary(old_dt$hr_45)
+summary(new_dt$hr_45)
+```
