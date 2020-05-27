@@ -19,10 +19,10 @@ dt <- read.csv(paste0(data_path, "aditya_hpv_final_v3_attributes_referred_by_fin
 
 # Replace missing values in each column by median
 
-for(i in 3:ncol(dt)){
+#for(i in 3:ncol(dt)){
   # don't impute first two columns: "ID", "type_string" 
-  dt[is.na(dt[,i]), i] <- median(dt[,i], na.rm = TRUE)
-}
+  #dt[is.na(dt[,i]), i] <- median(dt[,i], na.rm = TRUE)
+#}
 
 
 # Convert to network object ---------------------------
@@ -141,6 +141,19 @@ hpv_net %v% "hr_16_or_18" <- dt$hr_16_or_18
 dt$hr_16_and_18 <- ifelse(hr16_or_18 == 2, 1, 0)
 hpv_net %v% "hr_16_and_18" <- dt$hr_16_and_18 
 
+# Delete nodes with missing values
+
+nodes.remove <- which(is.na(hpv_net %v% "hr16") |
+                        is.na(hpv_net %v% "HIV") |
+                        is.na(hpv_net %v% "fta") |
+                        is.na(hpv_net %v% "num_anal_sex_receptive_2_w1")  
+)
+
+length(nodes.remove)    
+    
+hpv_net <- network::delete.vertices(hpv_net, nodes.remove)
+
+
 # Convert to igraph -------------------------
 
 hpv_ig <- asIgraph(hpv_net)
@@ -150,38 +163,38 @@ vcount(hpv_ig)
 
 # Compute assortativity coefficients ---------------------------
 
-assortativity(hpv_ig, dt$hr_16) #hpv_ig should have 160 nodes
-assortativity(hpv_ig, dt$hr_18)
-assortativity(hpv_ig, dt$hr_16_or_18)
-assortativity(hpv_ig, dt$hr_16_and_18)
-assortativity(hpv_ig, dt$hr_31)
-assortativity(hpv_ig, dt$hr_33)
-assortativity(hpv_ig, dt$hr_35)
-assortativity(hpv_ig, dt$hr_39)
-assortativity(hpv_ig, dt$hr_45)
-assortativity(hpv_ig, dt$hr_51)
-assortativity(hpv_ig, dt$hr_52)
-assortativity(hpv_ig, dt$hr_58)
-assortativity(hpv_ig, dt$hr_59)
-assortativity(hpv_ig, dt$hr_68)
+assortativity(hpv_ig, hpv_net %v% "hr16") #hpv_ig should have 160 nodes
+assortativity(hpv_ig, hpv_net %v% "hr18")
+assortativity(hpv_ig, hpv_net %v% "hr_16_or_18")
+assortativity(hpv_ig, hpv_net %v% "hr_16_and_18")
+assortativity(hpv_ig, hpv_net %v% "hr31")
+assortativity(hpv_ig, hpv_net %v% "hr33")
+assortativity(hpv_ig, hpv_net %v% "hr35")
+assortativity(hpv_ig, hpv_net %v% "hr39")
+assortativity(hpv_ig, hpv_net %v% "hr45")
+assortativity(hpv_ig, hpv_net %v% "hr51")
+assortativity(hpv_ig, hpv_net %v% "hr52")
+assortativity(hpv_ig, hpv_net %v% "hr58")
+assortativity(hpv_ig, hpv_net %v% "hr59")
+assortativity(hpv_ig, hpv_net %v% "hr68")
 
-assortativity(hpv_ig, dt$hiv_w1)
-assortativity(hpv_ig, dt$fta_w1)
+assortativity(hpv_ig, hpv_net %v% "HIV")
+assortativity(hpv_ig, hpv_net %v% "fta")
 
-assortativity(hpv_ig, dt$greq1_num_anal_partners_w1)
-assortativity(hpv_ig, dt$greq1_num_anal_sex_insertive_2_w1)
-assortativity(hpv_ig, dt$greq1_num_anal_sex_receptive_2_w1)
+assortativity(hpv_ig, hpv_net %v% "num_anal_partners_w1")
+assortativity(hpv_ig, hpv_net %v% "num_anal_sex_insertive_2_w1")
+assortativity(hpv_ig, hpv_net %v% "num_anal_sex_receptive_2_w1")
 
-assortativity(hpv_ig, dt$age.cat)
-assortativity(hpv_ig, dt$sex.id.cat)
-assortativity(hpv_ig, dt$educ.cat)
-assortativity(hpv_ig, dt$past12m_homeless_w1)
+assortativity(hpv_ig, hpv_net %v% "age.cat")
+assortativity(hpv_ig, hpv_net %v% "sex.id.cat")
+assortativity(hpv_ig, hpv_net %v% "educ.cat")
+assortativity(hpv_ig, hpv_net %v% "past12m_homeless_w1")
 
 
 # Compute assortativity coefficients for HIV-pos subgraph ---------------------------
 
 # compute positive subgraph
-hivpos.vid <- which(dt$hiv_w1 == 1)
+hivpos.vid <- which(hpv_net %v% "HIV" == 1)
 hpv_ig_hivpos <- induced_subgraph(hpv_ig, vids = hivpos.vid)
 
 # filter dt for attributes of HIV+ individuals
