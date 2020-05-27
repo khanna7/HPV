@@ -197,88 +197,73 @@ assortativity(hpv_ig, hpv_net %v% "past12m_homeless_w1")
 hivpos.vid <- which(hpv_net %v% "HIV" == 1)
 hpv_ig_hivpos <- induced_subgraph(hpv_ig, vids = hivpos.vid)
 
-# filter dt for attributes of HIV+ individuals
-dt.hivpos <-
-  dt %>%
-  filter(hiv_w1 == 1)
-
 # investigate structure of above objects
 ecount(hpv_ig_hivpos)
 vcount(hpv_ig_hivpos)
 
-dim(dt.hivpos)
+assortativity(hpv_ig_hivpos, vertex_attr(hpv_ig_hivpos, "hr16"))
+assortativity(hpv_ig_hivpos, vertex_attr(hpv_ig_hivpos, "hr18"))
+assortativity(hpv_ig_hivpos, vertex_attr(hpv_ig_hivpos, "hr_16_or_18"))
+assortativity(hpv_ig_hivpos, vertex_attr(hpv_ig_hivpos, "hr_16_and_18"))
+assortativity(hpv_ig_hivpos, vertex_attr(hpv_ig_hivpos, "hr31"))
+assortativity(hpv_ig_hivpos, vertex_attr(hpv_ig_hivpos, "hr33"))
+assortativity(hpv_ig_hivpos, vertex_attr(hpv_ig_hivpos, "hr35"))
+assortativity(hpv_ig_hivpos, vertex_attr(hpv_ig_hivpos, "hr39"))
+assortativity(hpv_ig_hivpos, vertex_attr(hpv_ig_hivpos, "hr45"))
+assortativity(hpv_ig_hivpos, vertex_attr(hpv_ig_hivpos, "hr51"))
+assortativity(hpv_ig_hivpos, vertex_attr(hpv_ig_hivpos, "hr52"))
+assortativity(hpv_ig_hivpos, vertex_attr(hpv_ig_hivpos, "hr58"))
+assortativity(hpv_ig_hivpos, vertex_attr(hpv_ig_hivpos, "hr59"))
+assortativity(hpv_ig_hivpos, vertex_attr(hpv_ig_hivpos, "hr68"))
 
-assortativity(hpv_ig_hivpos, dt.hivpos$hr_16)
-assortativity(hpv_ig_hivpos, dt.hivpos$hr_18)
-assortativity(hpv_ig_hivpos, dt.hivpos$hr_16_or_18)
-assortativity(hpv_ig_hivpos, dt.hivpos$hr_16_and_18)
-assortativity(hpv_ig_hivpos, dt.hivpos$hr_31)
-assortativity(hpv_ig_hivpos, dt.hivpos$hr_33)
-assortativity(hpv_ig_hivpos, dt.hivpos$hr_35)
-assortativity(hpv_ig_hivpos, dt.hivpos$hr_39)
-assortativity(hpv_ig_hivpos, dt.hivpos$hr_45)
-assortativity(hpv_ig_hivpos, dt.hivpos$hr_51)
-assortativity(hpv_ig_hivpos, dt.hivpos$hr_52)
-assortativity(hpv_ig_hivpos, dt.hivpos$hr_58)
-assortativity(hpv_ig_hivpos, dt.hivpos$hr_59)
-assortativity(hpv_ig_hivpos, dt.hivpos$hr_68)
+assortativity(hpv_ig_hivpos, vertex_attr(hpv_ig_hivpos, "HIV")) #all HIV are 1, assort. is therefore NaN
+assortativity(hpv_ig_hivpos, vertex_attr(hpv_ig_hivpos, "fta"))
 
-assortativity(hpv_ig_hivpos, dt.hivpos$hiv_w1)
-assortativity(hpv_ig_hivpos, dt.hivpos$fta_w1)
+assortativity(hpv_ig_hivpos, vertex_attr(hpv_ig_hivpos, "num_anal_partners_w1"))
+assortativity(hpv_ig_hivpos, vertex_attr(hpv_ig_hivpos, "num_anal_sex_insertive_2_w1"))
+assortativity(hpv_ig_hivpos, vertex_attr(hpv_ig_hivpos, "num_anal_sex_receptive_2_w1"))
 
-assortativity(hpv_ig_hivpos, dt.hivpos$greq1_num_anal_partners_w1)
-assortativity(hpv_ig_hivpos, dt.hivpos$greq1_num_anal_sex_insertive_2_w1)
-assortativity(hpv_ig_hivpos, dt.hivpos$greq1_num_anal_sex_receptive_2_w1)
-
-assortativity(hpv_ig_hivpos, dt.hivpos$age.cat)
-assortativity(hpv_ig_hivpos, dt.hivpos$sex.id.cat)
-assortativity(hpv_ig_hivpos, dt.hivpos$educ.cat)
-assortativity(hpv_ig_hivpos, dt.hivpos$past12m_homeless_w1)
+assortativity(hpv_ig_hivpos, vertex_attr(hpv_ig_hivpos, "age.cat"))
+assortativity(hpv_ig_hivpos, vertex_attr(hpv_ig_hivpos, "sex.id.cat"))
+assortativity(hpv_ig_hivpos, vertex_attr(hpv_ig_hivpos, "educ.cat"))
+assortativity(hpv_ig_hivpos, vertex_attr(hpv_ig_hivpos, "past12m_homeless_w1"))
 
 # Compute assortativity coefficients for HIV-neg subgraph ---------------------------
 
 # compute negative subgraph
-hivneg.vid <- which(dt$hiv_w1 == 0)
+hivneg.vid <- which(hpv_net %v% "HIV" == 0)
 hpv_ig_hivneg <- induced_subgraph(hpv_ig, vids = hivneg.vid)
-
-# filter dt for attributes of HIV- individuals
-dt.hivneg <-
-  dt %>%
-  filter(hiv_w1 == 0)
 
 # investigate structure of above objects
 ecount(hpv_ig_hivneg)
 vcount(hpv_ig_hivneg)
 
-dim(dt.hivneg)
+assortativity(hpv_ig_hivneg, vertex_attr(hpv_ig_hivneg, "hr16"))
+assortativity(hpv_ig_hivneg, vertex_attr(hpv_ig_hivneg, "hr18"))
+assortativity(hpv_ig_hivneg, vertex_attr(hpv_ig_hivneg, "hr_16_or_18"))
+assortativity(hpv_ig_hivneg, vertex_attr(hpv_ig_hivneg, "hr_16_and_18"))
+assortativity(hpv_ig_hivneg, vertex_attr(hpv_ig_hivneg, "hr31"))
+assortativity(hpv_ig_hivneg, vertex_attr(hpv_ig_hivneg, "hr33"))
+assortativity(hpv_ig_hivneg, vertex_attr(hpv_ig_hivneg, "hr35"))
+assortativity(hpv_ig_hivneg, vertex_attr(hpv_ig_hivneg, "hr39"))
+assortativity(hpv_ig_hivneg, vertex_attr(hpv_ig_hivneg, "hr45"))
+assortativity(hpv_ig_hivneg, vertex_attr(hpv_ig_hivneg, "hr51"))
+assortativity(hpv_ig_hivneg, vertex_attr(hpv_ig_hivneg, "hr52"))
+assortativity(hpv_ig_hivneg, vertex_attr(hpv_ig_hivneg, "hr58"))
+assortativity(hpv_ig_hivneg, vertex_attr(hpv_ig_hivneg, "hr59"))
+assortativity(hpv_ig_hivneg, vertex_attr(hpv_ig_hivneg, "hr68"))
 
-assortativity(hpv_ig_hivneg, dt.hivneg$hr_16)
-assortativity(hpv_ig_hivneg, dt.hivneg$hr_18)
-assortativity(hpv_ig_hivneg, dt.hivneg$hr_16_or_18)
-assortativity(hpv_ig_hivneg, dt.hivneg$hr_16_and_18) #all HIV-negatives have 0 for hr 16 and 18: xtabs(~as.factor(vertex_attr(hpv_ig, "hr_16_and_18"))+as.factor(vertex_attr(hpv_ig, "HIV")))
-assortativity(hpv_ig_hivneg, dt.hivneg$hr_31)
-assortativity(hpv_ig_hivneg, dt.hivneg$hr_33)
-assortativity(hpv_ig_hivneg, dt.hivneg$hr_35)
-assortativity(hpv_ig_hivneg, dt.hivneg$hr_39)
-assortativity(hpv_ig_hivneg, dt.hivneg$hr_45)
-assortativity(hpv_ig_hivneg, dt.hivneg$hr_51)
-assortativity(hpv_ig_hivneg, dt.hivneg$hr_52)
-assortativity(hpv_ig_hivneg, dt.hivneg$hr_58)
-assortativity(hpv_ig_hivneg, dt.hivneg$hr_59)
-assortativity(hpv_ig_hivneg, dt.hivneg$hr_68)
+assortativity(hpv_ig_hivneg, vertex_attr(hpv_ig_hivneg, "HIV")) #all HIV are 0, assort. is therefore NaN
+assortativity(hpv_ig_hivneg, vertex_attr(hpv_ig_hivneg, "fta"))
 
-assortativity(hpv_ig_hivneg, dt.hivneg$hiv_w1)
-assortativity(hpv_ig_hivneg, dt.hivneg$fta_w1)
+assortativity(hpv_ig_hivneg, vertex_attr(hpv_ig_hivneg, "num_anal_partners_w1"))
+assortativity(hpv_ig_hivneg, vertex_attr(hpv_ig_hivneg, "num_anal_sex_insertive_2_w1"))
+assortativity(hpv_ig_hivneg, vertex_attr(hpv_ig_hivneg, "num_anal_sex_receptive_2_w1"))
 
-assortativity(hpv_ig_hivneg, dt.hivneg$greq1_num_anal_partners_w1)
-assortativity(hpv_ig_hivneg, dt.hivneg$greq1_num_anal_sex_insertive_2_w1)
-assortativity(hpv_ig_hivneg, dt.hivneg$greq1_num_anal_sex_receptive_2_w1)
-
-assortativity(hpv_ig_hivneg, dt.hivneg$age.cat)
-assortativity(hpv_ig_hivneg, dt.hivneg$sex.id.cat)
-assortativity(hpv_ig_hivneg, dt.hivneg$educ.cat)
-assortativity(hpv_ig_hivneg, dt.hivneg$past12m_homeless_w1)
-
+assortativity(hpv_ig_hivneg, vertex_attr(hpv_ig_hivneg, "age.cat"))
+assortativity(hpv_ig_hivneg, vertex_attr(hpv_ig_hivneg, "sex.id.cat"))
+assortativity(hpv_ig_hivneg, vertex_attr(hpv_ig_hivneg, "educ.cat"))
+assortativity(hpv_ig_hivneg, vertex_attr(hpv_ig_hivneg, "past12m_homeless_w1"))
 
 
 # Save R-binary ---------------------------
