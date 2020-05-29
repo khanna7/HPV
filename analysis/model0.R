@@ -17,7 +17,7 @@ library(ergm)
 
 # Load data ---------------------------
 
-load(file="ergm-setup.RData")
+load(file="ergm-setup-data-delete-24-cases.RData")
 
 
 # Create needed variables ---------------------------
