@@ -21,6 +21,10 @@ library(ergm)
 
 load(file="assortativity.RData")
 
+# Remove rows corresponding to removed nodes from `dt`
+dt <- filter(dt, !row_number() %in% nodes.remove)
+dim(dt)
+
 
 # Add needed attributes to network object ---------------------------
 

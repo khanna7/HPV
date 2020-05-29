@@ -143,15 +143,46 @@ hpv_net %v% "hr_16_and_18" <- dt$hr_16_and_18
 
 # Delete nodes with missing values
 
-nodes.remove <- which(is.na(hpv_net %v% "hr16") |
-                        is.na(hpv_net %v% "HIV") |
-                        is.na(hpv_net %v% "fta") |
-                        is.na(hpv_net %v% "num_anal_sex_receptive_2_w1")  
-)
+nodes.remove <- which(is.na(hpv_net %v% "hr16")) #remove only 24 cases
+
+# nodes.remove <- which(is.na(hpv_net %v% "hr16") |
+#                         is.na(hpv_net %v% "HIV") |
+#                         is.na(hpv_net %v% "fta") |
+#                         is.na(hpv_net %v% "num_anal_sex_receptive_2_w1")
+# )
 
 length(nodes.remove)    
     
 hpv_net <- network::delete.vertices(hpv_net, nodes.remove)
+
+# Impute missing values for anly remaining vertex attribuets -------------------------
+
+vertex.atts.list <- network::list.vertex.attributes(hpv_net)
+  
+atts.w.nas <- list() #identify which atts have missing values still
+for (i in 1:(length(vertex.atts.list))){
+  if(any(is.na(hpv_net %v% vertex.atts.list[i]))){
+    atts.w.nas <- c(atts.w.nas, i)
+  }
+  }
+atts.w.nas <- unlist(atts.w.nas)  
+vertex.atts.list[atts.w.nas]
+
+for(i in atts.w.nas){
+  
+    att.name <- vertex.atts.list[i] 
+    att.vals <- as.numeric(hpv_net %v% att.name)
+
+    if(any(is.na(att.vals))){
+      
+    id.nas <- which(is.na(att.vals))
+    network::set.vertex.attribute(hpv_net, 
+                                  att.name, 
+                                  median(att.vals, na.rm = T),
+                                  v = id.nas
+                                  )
+    }
+}
 
 
 # Convert to igraph -------------------------
