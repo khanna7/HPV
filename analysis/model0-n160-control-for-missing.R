@@ -20,9 +20,19 @@ library(ergm)
 
 load(file="ergm-setup-data-keep-all-cases.RData")
 
-# Create needed variables ---------------------------
+# Create "missing" variable ---------------------------
 
-# All needed variables are constructed in ergm-setup.R
+nodes.missing.samples <- #from nodes.remove in the n=136  analysis
+  c(6, 9, 10, 11, 14, 30, 36, 46, 78, 
+    87, 90, 96, 100, 102, 108, 112, 
+    118, 127, 137, 140, 144, 149, 152, 159)
+
+missing_samples <- rep(0, network.size(hpv_net))
+missing_samples[nodes.missing.samples] <- 1
+
+hpv_net %v% "missing_samples" <- missing_samples
+table(hpv_net %v% "missing_samples", exclude = NULL)
+
 
 
 # Fit ERGM: Model 0_a ---------------------------
@@ -41,7 +51,8 @@ load(file="ergm-setup-data-keep-all-cases.RData")
 # + geometrically weighted edgewise shared partner statistics (GWESP)
 # + degree 0 and degree 1 to control for having only one tie (degree1). 
 
-factors <- c("edges", "degree(0:1)", "gwesp(1, fixed=TRUE)") #model with degree(1) only does not converge
+factors <- c("edges", "degree(0:1)", "gwesp(1, fixed=TRUE)",
+             "nodefactor('missing_samples')") #model with degree(1) only does not converge
 form.model0 <- as.formula(paste0("hpv_net~", paste0(factors, collapse="+")))
 
 model0.age <- update(form.model0, ~. +absdiff("age"))#specify models
