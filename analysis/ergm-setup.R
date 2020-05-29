@@ -202,4 +202,12 @@ hpv_net %v% "sex.id.cat" <- dt$sex.id.cat
 
 # Save image ---------------------------
 
-save.image(file="ergm-setup.RData")
+# TO KEEP ALL 160 CASES
+# COMMENT FIRST LINE AND UNCOMMENT SECOND LINE BELOW 
+
+####################################################
+save.image(file="ergm-setup-data-delete-24-cases.RData")
+#save.image(file="ergm-setup-data-keep-all-cases.RData")
+####################################################
+
+
