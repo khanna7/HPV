@@ -19,7 +19,14 @@ library(ergm)
 
 # Load data ---------------------------
 
-load(file="assortativity.RData")
+# TO KEEP ALL 160 CASES
+# COMMENT FIRST LINE AND UNCOMMENT SECOND LINE BELOW 
+
+####################################################
+load(file="assortativity-data-delete-24-cases.RData")
+#load(file="assortativity-data-keep-all-cases.RData")
+####################################################
+
 
 # Remove rows corresponding to removed nodes from `dt`
 dt <- filter(dt, !row_number() %in% nodes.remove)
