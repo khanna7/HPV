@@ -21,7 +21,7 @@ library(igraph)
 
 ####################################################
 load(file="data-delete-24-cases.RData") #for deleting n=24
-#load(file="data-keep-cases.RData") #for keeping all 160 cases
+#load(file="data-keep-all-cases.RData") #for keeping all 160 cases
 ####################################################
 
 # Compute assortativity coefficients ---------------------------
