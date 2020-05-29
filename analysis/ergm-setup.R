@@ -28,6 +28,8 @@ load(file="assortativity-data-delete-24-cases.RData")
 ####################################################
 
 
+# TO KEEP ALL 160 CASES
+# COMMENT LINES BELOW
 # Remove rows corresponding to removed nodes from `dt`
 dt <- filter(dt, !row_number() %in% nodes.remove)
 dim(dt)
