@@ -130,23 +130,23 @@ summary(model0_hr68)
 
 # DIFF=T models ---------------------------
 
-model0.hr16.diffT <- update(form.model0, ~. + nodematch("hr16", diff=T))
-model0.hr18.diffT <- update(form.model0, ~. + nodematch("hr18", diff=T))
-model0.hr45.diffT <- update(form.model0, ~. + nodematch("hr45", diff=T))
-model0.hr16_or_18.diffT <- update(form.model0, ~. + nodematch("hr_16_or_18", diff=T))
-model0.hr16_and_18.diffT <- update(form.model0, ~. + nodematch("hr_16_and_18", diff=T))
-
-model0_hr16.diffT <- ergm(formula = model0.hr16.diffT, eval.loglik = F)  
-model0_hr18.diffT <- ergm(formula = model0.hr18.diffT, eval.loglik = F) 
-model0_hr45.diffT <- ergm(formula = model0.hr45.diffT, eval.loglik = F) 
-model0_hr16_or_18.diffT <- ergm(formula = model0.hr16_or_18.diffT, eval.loglik = F)  
-model0_hr16_and_18.diffT <- ergm(formula = model0.hr16_and_18.diffT, eval.loglik = F)  
-  
-summary(model0_hr16.diffT)
-summary(model0_hr18.diffT)
-summary(model0_hr45.diffT)
-summary(model0_hr16_or_18.diffT)
-summary(model0_hr16_and_18.diffT)
+# model0.hr16.diffT <- update(form.model0, ~. + nodematch("hr16", diff=T))
+# model0.hr18.diffT <- update(form.model0, ~. + nodematch("hr18", diff=T))
+# model0.hr45.diffT <- update(form.model0, ~. + nodematch("hr45", diff=T))
+# model0.hr16_or_18.diffT <- update(form.model0, ~. + nodematch("hr_16_or_18", diff=T))
+# model0.hr16_and_18.diffT <- update(form.model0, ~. + nodematch("hr_16_and_18", diff=T))
+# 
+# model0_hr16.diffT <- ergm(formula = model0.hr16.diffT, eval.loglik = F)  
+# model0_hr18.diffT <- ergm(formula = model0.hr18.diffT, eval.loglik = F) 
+# model0_hr45.diffT <- ergm(formula = model0.hr45.diffT, eval.loglik = F) 
+# model0_hr16_or_18.diffT <- ergm(formula = model0.hr16_or_18.diffT, eval.loglik = F)  
+# model0_hr16_and_18.diffT <- ergm(formula = model0.hr16_and_18.diffT, eval.loglik = F)  
+#   
+# summary(model0_hr16.diffT)
+# summary(model0_hr18.diffT)
+# summary(model0_hr45.diffT)
+# summary(model0_hr16_or_18.diffT)
+# summary(model0_hr16_and_18.diffT)
 
 
 # Fit ERGM: Model 0_b ---------------------------
