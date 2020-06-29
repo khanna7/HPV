@@ -11,8 +11,9 @@ library(dplyr)
 
 # Read data ---------------------------
 
-data_path <- "../sent_to_Aditya_02092020/"
-dyad <- read.csv(paste0(data_path, "HPV_dyad_2019-12-16.csv"))
+data_path <- "../sent_to_Aditya_02092020/" # for attributes
+dyad_path <- "../sent-to-aditya-june-2020/" #for dyads
+dyad <- read.csv(paste0(dyad_path, "houston_w1_dyad_list_n_160_updated.csv"))
 dt <- read.csv(paste0(data_path, "aditya_hpv_final_v3_attributes_referred_by_final.csv"), as.is = T)
 
 
@@ -379,3 +380,4 @@ dt %>%
 # Save image ---------------------------
 
 save.image(file="unweighted-desriptives.RData")
+
