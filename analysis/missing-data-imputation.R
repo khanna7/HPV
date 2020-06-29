@@ -3,7 +3,7 @@
 # To keep all 160 below see "TO KEEP ALL 160 CASES"
 # default is to delete n=24 with indequate HPV test samples
 
-rm(list=ls())
+rm(list=ls()) 
 
 
 # Load libraries ---------------------------
@@ -15,20 +15,19 @@ library(igraph)
 
 
 # Read data ---------------------------
-data_path <- "../sent_to_Aditya_02092020/"
-dyad <- read.csv(paste0(data_path, "HPV_dyad_2019-12-16.csv"))
-dt <- read.csv(paste0(data_path, "aditya_hpv_final_v3_attributes_referred_by_final.csv"), as.is = T)
 
+
+load(file="unweighted-desriptives.RData")
 
 # Replace missing values in each column by median
 
 # UNCOMMENT BELOW TO KEEP ALL 160 CASES
-####################################################
-#for(i in 3:ncol(dt)){ 
-# don't impute first two columns: "ID", "type_string" 
-#dt[is.na(dt[,i]), i] <- median(dt[,i], na.rm = TRUE)
-#}
-#####################################################
+# ####################################################
+# for(i in 3:ncol(dt)){
+# #don't impute first two columns: "ID", "type_string"
+# dt[is.na(dt[,i]), i] <- median(dt[,i], na.rm = TRUE)
+# }
+# #####################################################
 
 # Convert to network object ---------------------------
 
@@ -153,12 +152,12 @@ hpv_net %v% "hr_16_and_18" <- dt$hr_16_and_18
 
 nodes.remove <- which(is.na(hpv_net %v% "hr16")) #remove only 24 cases
 
-length(nodes.remove)    
+length(nodes.remove)
 
 hpv_net <- network::delete.vertices(hpv_net, nodes.remove)
 
 # Impute missing values for anly remaining vertex attribuets -------------------------
-
+ 
 vertex.atts.list <- network::list.vertex.attributes(hpv_net)
 
 atts.w.nas <- list() #identify which atts have missing values still
@@ -172,20 +171,21 @@ vertex.atts.list[atts.w.nas]
 
 for(i in atts.w.nas){
   
-  att.name <- vertex.atts.list[i] 
+  att.name <- vertex.atts.list[i]
   att.vals <- as.numeric(hpv_net %v% att.name)
   
   if(any(is.na(att.vals))){
     
     id.nas <- which(is.na(att.vals))
-    network::set.vertex.attribute(hpv_net, 
-                                  att.name, 
+    network::set.vertex.attribute(hpv_net,
+                                  att.name,
                                   median(att.vals, na.rm = T),
                                   v = id.nas
     )
   }
 }
 
+####################################################
 
 # Convert to igraph -------------------------
 
