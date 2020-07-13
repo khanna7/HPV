@@ -13,7 +13,7 @@ Preamble:
  * Compute RDS weights: https://github.com/khanna7/HPV/blob/master/analysis/compute-RDS-weights.R
  * Compute RDS-weighted associations: https://github.com/khanna7/HPV/blob/master/analysis/compute-RDS-weighted-associations.R
  * Create network object, assign vertex attributes, and impute missing data: https://github.com/khanna7/HPV/blob/master/analysis/missing-data-imputation.R
- * Compute assortativity metrics: https://github.com/khanna7/HPV/tree/master/analysis
+ * Compute assortativity metrics: https://github.com/khanna7/HPV/blob/master/analysis/assortativity.R
  * Create new variables that for the ERGM: https://github.com/khanna7/HPV/blob/master/analysis/ergm-setup.R
  * Fit ERG Model 0: https://github.com/khanna7/HPV/blob/master/analysis/model0.R
  * Fit ERG Model 1: https://github.com/khanna7/HPV/blob/master/analysis/model1.R
